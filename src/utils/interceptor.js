@@ -2,8 +2,8 @@
 
 const onRequest = (config) => {
     const token = localStorage.getItem("jwtToken");
-    if (token != null) {
-        config.headers["Authorization"] = `Bearer ${token}`;
+    if (token) {
+        config.headers["Authorization"] = `Bearer ${token.replace(/"/g,"")}`;
     }
     return config;
 };
@@ -21,8 +21,8 @@ const onResponseError = async (error) => {
         // Access Token was expired
         if (error.response.status === 401) {
             console.log('*************JWT TOKEN EXPIRED !!****************')
-            localStorage.clear();
-            window.location.href = "/";
+            // localStorage.clear();
+            // window.location.href = "/";
             // toast.warn('Your session has expired. Please login again.');
             // try {
             //     const rs = await axios.post(`${API_URL}/auth/token`, {

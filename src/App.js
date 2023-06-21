@@ -12,7 +12,7 @@ function App() {
 
   const {user} = useSelector((state)=>state.auth)
   const queryClient = new QueryClient()
-  console.log(user)
+
   
   return (
     <>

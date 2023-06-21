@@ -22,6 +22,7 @@ const Login = () => {
           // Invalidate and refetch
           dispacth(authActions.addUser(data.data))
           localStorage.setItem("Admin", JSON.stringify(data.data))
+          localStorage.setItem("jwtToken", JSON.stringify(data.data.token))
           toast.success("Login success")
         },
         onError:()=>{
