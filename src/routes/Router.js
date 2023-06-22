@@ -9,6 +9,8 @@ import Category from "../pages/Category";
 import AddCategory from "../pages/AddCategory";
 import Brand from "../pages/Brand";
 import AddBrand from "../pages/AddBrand";
+import UpdateCategory from "../pages/UpdateCategory";
+import UpdateBrand from "../pages/UpdateBrand";
 
 const Router = () => {
   return (
@@ -20,8 +22,10 @@ const Router = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/category" element={<Category />} />
       <Route path="/add-category" element={<AddCategory />} />
+      <Route path="/update-category/:id" element={<UpdateCategory />} />
       <Route path="/brand" element={<Brand />} />
       <Route path="/add-brand" element={<AddBrand />} />
+      <Route path="/update-brand/:id" element={<UpdateBrand />} />
       <Route path="/sell-car" element={<SellCar />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import {FiUploadCloud} from "react-icons/fi"
 import * as yup from "yup";
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ColorRing } from 'react-loader-spinner';
-import { addBrand } from '../services/barndServices';
+import { singalBrand, updateBrand } from '../services/barndServices';
 
 
 let schema = yup.object().shape({
@@ -14,70 +14,69 @@ let schema = yup.object().shape({
   description:yup.string().required("description is Required"),
 });
 
-const AddBrand = () => {
+const UpdateBrand = () => {
+   const parems = useParams()
+   const itemID = parems.id
+   const queryClient = useQueryClient()
   const navgate =  useNavigate()
-
-  const {mutate, isLoading} = useMutation(addBrand, {
+  const [title,setTitle] = useState("")
+  const [description,setdescription] = useState("")
+  const { data, error } = useQuery(["brand1",itemID],()=>singalBrand(itemID));
+  const {mutate, isLoading} = useMutation((data)=>updateBrand(data,itemID), {
     onSuccess: (data) => {
       // Invalidate and refetch
-      formik.resetForm()
-      toast.success("Add Category success")
+      toast.success("Update Category success")
+      queryClient.invalidateQueries(['brand1'])
+      navgate("/brand")
     },
     onError:()=>{
       toast.error("error ")
     }
   })
 
-    const formik = useFormik({
-      initialValues: {
-        title: "",
-        description:"",
-      },
-      validationSchema: schema,
-      onSubmit: (values) => {
-        const formData = new FormData();
-        formData.append('title', values.title);
-        formData.append('description', values.description);
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    const data= {
+        title,
+        description
+    }
+    mutate(data)
+  }
 
-        mutate(values)
-      },
-    });
+  useEffect(()=>{
+    setTitle(data?.title)
+    setdescription(data?.description)
+  },[data])
 
   return (
     <div className='dasbord_laout text-white' >
         <div className='pb-5'>
-        <h2 className=' font-semibold text-[23px]'>Add Brand</h2>
-          <p>Add your Product Brand and necessary information from here</p>
+        <h2 className=' font-semibold text-[23px]'>Update Brand</h2>
+          <p>Update your Product category and necessary information from here</p>
         </div>
 
-        <form onSubmit={formik.handleSubmit} className=" bg-primary py-8 rounded-lg px-5">
+        <form onSubmit={(e)=>handleSubmit(e)} className=" bg-primary py-8 rounded-lg px-5">
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Name</label>
                 <div className='w-[70%]'>
                     <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Title' 
-                      onChange={formik.handleChange("title")}
-                      onBlur={formik.handleBlur("title")}
-                      value={formik.values.title}  
+                      onChange={(e)=>setTitle(e.target.value)}
+                      value={title}  
                     
                     />
-                    <div className="error text-red-500" style={{height:"5px",marginLeft:"5px"}}>
-                        {formik.touched.title && formik.errors.title}
-                      </div>
                 </div>
             </div>
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Description</label>
                 <div className='w-[70%]'>
                   <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Description'
-                    onChange={formik.handleChange("description")}
-                    onBlur={formik.handleBlur("description")}
-                    value={formik.values.description}    
+                    onChange={(e)=>setdescription(e.target.value)}
+                    value={description}    
                   ></textarea>
-                  <div className="error text-red-500" style={{height:"5px",marginLeft:"5px"}}>
-                        {formik.touched.description && formik.errors.description}
-                  </div>
+
                 </div>
             </div>
+
             
             <div className=' flex items-center justify-center gap-6 py-5 '>
                 <button onClick={()=>navgate("/brand")} className=' py-3 px-10 rounded-lg bg-gray-600 text-white '>Cancel</button>
@@ -90,7 +89,7 @@ const AddBrand = () => {
                           wrapperStyle={{}}
                           wrapperClass="blocks-wrapper"
                           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                        /> ) : "Add Category"}</button>
+                        /> ) : "Update"}</button>
             </div>
 
         </form>
@@ -98,4 +97,4 @@ const AddBrand = () => {
   )
 }
 
-export default AddBrand
+export default UpdateBrand

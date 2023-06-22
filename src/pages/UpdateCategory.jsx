@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import {FiUploadCloud} from "react-icons/fi"
 import * as yup from "yup";
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { singalCategory, updateCategory } from '../services/categoryServices';
 import { ColorRing } from 'react-loader-spinner';
-import { addBrand } from '../services/barndServices';
 
 
 let schema = yup.object().shape({
@@ -14,40 +14,60 @@ let schema = yup.object().shape({
   description:yup.string().required("description is Required"),
 });
 
-const AddBrand = () => {
+const UpdateCategory = () => {
+   const parems = useParams()
+   const itemID = parems.id
+   const queryClient = useQueryClient()
+  const [file,setfile] = useState()
   const navgate =  useNavigate()
-
-  const {mutate, isLoading} = useMutation(addBrand, {
+  const { data, error } = useQuery(["category1",itemID],()=>singalCategory(itemID));
+  const {mutate, isLoading} = useMutation((data)=>updateCategory(data,itemID), {
     onSuccess: (data) => {
       // Invalidate and refetch
       formik.resetForm()
-      toast.success("Add Category success")
+      toast.success("Update Category success")
+      queryClient.invalidateQueries(['category1'])
+      navgate("/category")
     },
     onError:()=>{
       toast.error("error ")
     }
   })
 
+  console.log(data)
+
+
+    useEffect(()=>{
+      formik.values.image = file
+    },[file])
+
     const formik = useFormik({
       initialValues: {
         title: "",
         description:"",
+        image:""
       },
       validationSchema: schema,
       onSubmit: (values) => {
         const formData = new FormData();
         formData.append('title', values.title);
         formData.append('description', values.description);
+        formData.append('image', values.image);
 
         mutate(values)
       },
     });
 
+    useEffect(()=>{
+        formik.values.title = data && data.title
+        formik.values.description = data && data.description
+      },[parems.id,data])
+
   return (
     <div className='dasbord_laout text-white' >
         <div className='pb-5'>
-        <h2 className=' font-semibold text-[23px]'>Add Brand</h2>
-          <p>Add your Product Brand and necessary information from here</p>
+        <h2 className=' font-semibold text-[23px]'>Update Category</h2>
+          <p>Update your Product category and necessary information from here</p>
         </div>
 
         <form onSubmit={formik.handleSubmit} className=" bg-primary py-8 rounded-lg px-5">
@@ -78,9 +98,29 @@ const AddBrand = () => {
                   </div>
                 </div>
             </div>
+
+            <div className=' flex items-start justify-between mt-10'>
+                <label className=' text-[18px] font-medium' htmlFor="">Image</label>
+                <label htmlFor="id" className=' flex flex-col items-center gap-2 justify-center py-5 w-[70%] cursor-pointer border border-dashed rounded-lg border-gray-400'>
+                    <FiUploadCloud className=' text-[45px] text-green-600' />
+                    <h2 className='text-[20px] font-medium'>Drag your images here</h2>
+                    <p>(Only *.jpeg, *.webp and *.png images will be accepted)</p>
+                    <input id='id' type="file" onChange={(e)=>setfile(e.target.files[0])} className=' hidden' />
+                </label>
+            </div>
+            <div className=' h-[70px] flex items-start justify-between'>
+                <div>
+
+                </div>
+                <div className='w-[70%]'>
+                    {
+                      file ? <img src={URL.createObjectURL(file)} alt="" className='w-[80px] h-[50px]' /> : <img src={`http://localhost:5000/uploads/${data?.image}`} alt="" className='w-[80px] h-[50px]' />
+                    }
+                </div>
+            </div>
             
             <div className=' flex items-center justify-center gap-6 py-5 '>
-                <button onClick={()=>navgate("/brand")} className=' py-3 px-10 rounded-lg bg-gray-600 text-white '>Cancel</button>
+                <button onClick={()=>navgate("/category")} className=' py-3 px-10 rounded-lg bg-gray-600 text-white '>Cancel</button>
                 <button type='submit' className=' py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300'>{isLoading ? ( 
                         <ColorRing
                           visible={true}
@@ -98,4 +138,4 @@ const AddBrand = () => {
   )
 }
 
-export default AddBrand
+export default UpdateCategory
