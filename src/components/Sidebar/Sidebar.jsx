@@ -17,7 +17,7 @@ const Sidebar = ({open,setOpen}) => {
     { name: "user", link: "/", icon: AiOutlineUser },
     { name: "category", link: "/category", icon: BiCategory },
     { name: "brand", link: "/brand", icon: TbBrandAdonisJs },
-    { name: "product", link: "/", icon: GrProductHunt },
+    { name: "product", link: "/product", icon: GrProductHunt },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

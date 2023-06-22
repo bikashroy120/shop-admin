@@ -11,6 +11,9 @@ import Brand from "../pages/Brand";
 import AddBrand from "../pages/AddBrand";
 import UpdateCategory from "../pages/UpdateCategory";
 import UpdateBrand from "../pages/UpdateBrand";
+import Product from "../pages/Product";
+import AddProduct from "../pages/AddProduct";
+import UpdateProduct from "../pages/UpdateProduct";
 
 const Router = () => {
   return (
@@ -26,6 +29,9 @@ const Router = () => {
       <Route path="/brand" element={<Brand />} />
       <Route path="/add-brand" element={<AddBrand />} />
       <Route path="/update-brand/:id" element={<UpdateBrand />} />
+      <Route path="/product" element={<Product />} />
+      <Route path="/add-product" element={<AddProduct />} />
+      <Route path="/update-product/:id" element={<UpdateProduct />} />
       <Route path="/sell-car" element={<SellCar />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
