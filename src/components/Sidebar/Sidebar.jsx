@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
+import {TbBrandBlogger,TbLogicOr} from "react-icons/tb"
 import { TbReportAnalytics,TbBrandAdonisJs } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
@@ -13,16 +14,16 @@ import "./sidebar.css";
 const Sidebar = ({open,setOpen}) => {
 
   const menus = [
-    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "user", link: "/", icon: AiOutlineUser },
-    { name: "category", link: "/category", icon: BiCategory },
-    { name: "brand", link: "/brand", icon: TbBrandAdonisJs },
-    { name: "product", link: "/product", icon: GrProductHunt },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", link: "/", icon: FiFolder },
-    { name: "Cart", link: "/", icon: FiShoppingCart },
+    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+    { name: "User", link: "/", icon: AiOutlineUser },
+    { name: "Category", link: "/category", icon: BiCategory },
+    { name: "Brand", link: "/brand", icon: TbBrandAdonisJs },
+    { name: "Product", link: "/product", icon: GrProductHunt },
+    { name: "Order", link: "/order", icon: TbReportAnalytics, margin: true },
+    { name: "Blog Category", link: "/blog-category", icon: TbLogicOr },
+    { name: "Blog", link: "/blog", icon: TbBrandBlogger },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Setting", link: "/settings", icon: RiSettings4Line },
   ];
   
 

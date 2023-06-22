@@ -14,6 +14,8 @@ import UpdateBrand from "../pages/UpdateBrand";
 import Product from "../pages/Product";
 import AddProduct from "../pages/AddProduct";
 import UpdateProduct from "../pages/UpdateProduct";
+import Blog from "../pages/Blog";
+import AddBlog from "../pages/AddBlog";
 
 const Router = () => {
   return (
@@ -33,6 +35,9 @@ const Router = () => {
       <Route path="/add-product" element={<AddProduct />} />
       <Route path="/update-product/:id" element={<UpdateProduct />} />
       <Route path="/sell-car" element={<SellCar />} />
+      <Route path="/order" element={<SellCar />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/add-blog" element={<AddBlog />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );

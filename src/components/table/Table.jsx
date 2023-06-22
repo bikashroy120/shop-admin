@@ -37,6 +37,7 @@ const Table = ({columns,data}) => {
                 paddingLeft: '20px', // override the cell padding for head cells
                 paddingRight: '20px',
                 fontSize:"18px",
+                background:"#333"
             },
         },
         cells: {
