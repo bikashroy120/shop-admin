@@ -8,23 +8,24 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
-import { deleteProduct, getProduct } from '../services/productServices';
+import { deleteBrand, getBrand } from '../services/barndServices';
+import { deleteCoupon, getCoupon } from '../services/couponServices';
 
-const Product = () => {
+const Copun = () => {
 
     const navigate =  useNavigate()
-    const { data, isLoading, error } = useQuery('product', getProduct);
+    const { data, isLoading, error } = useQuery(['coupon'], getCoupon);
     const [show,setShow] = useState(false)
     const [deleteId,setDeleteId] = useState()
     const queryClient = useQueryClient()
     const [search,setSearch] = useState("")
     const [dataCa,setDataCA] = useState([])
 
-    const {mutate} = useMutation(deleteProduct, {
+    const {mutate} = useMutation(deleteCoupon, {
         onSuccess: (data) => {
           // Invalidate and refetch
           toast.success("Delete success")
-          queryClient.invalidateQueries(['product'])
+          queryClient.invalidateQueries(['coupon'])
           setShow(false)
         },
         onError:()=>{
@@ -32,51 +33,45 @@ const Product = () => {
         }
       })
 
-
       useEffect(()=>{
-        const updat = data?.filter((item)=>item.title.toLowerCase().trim().includes(search.toLowerCase()))
+        const updat = data?.filter((item)=>item.name.toLowerCase().trim().includes(search.toLowerCase()))
         setDataCA(updat)
       },[search,data])
 
+      const changeDateFormet = (date) => {
+        const newDate = new Date(date).toLocaleDateString();
+        const [month, day, year] = newDate.split("/");
+        return [year, month, day].join("-");
+      };
+
     const columns = [
+
         {
-            name: 'Img',
-            selector: row => <img src={`http://localhost:5000/uploads/${row.images[0]}`} className={"w-[45px] h-[45px] rounded-full "}/>,
-            width:"100px"
+            name:"Id",
+            selector: row => row._id?.slice(10,16),
         },
         {
-            name: 'Title',
-            selector: row => row.title,
-            width:"250px"
+            name: 'Name',
+            selector: row => row.name,
         },
 
         {
-            name: 'Category',
-            selector: row => row.category?.title,
+            name: 'Expiry Date',
+            selector: row => changeDateFormet(row.expiry),
         },
+
         {
-            name: 'Brand',
-            selector: row => row.brand?.title,
+            name: 'Discount',
+            selector: row => row.discount,
         },
-        {
-            name: 'Price',
-            selector: row => row.bprice,
-        },
-        {
-            name: 'Sale Price',
-            selector: row => row.price,
-        },
-        {
-            name: 'Stock',
-            selector: row => row.quantity,
-        },
+
 
         {
             name:"Action",
             cell:(row)=> <>
                 <div className=' flex flex-row items-center gap-2'>
                     {/* <button><HiOutlineViewfinderCircle /></button> */}
-                    <button onClick={()=>navigate(`/update-product/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button>
+                    <button onClick={()=>navigate(`/update-coupon/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button>
                     <button onClick={()=>getId(row._id)} className=' text-[20px] hover:text-red-500' ><AiTwotoneDelete /></button>
                 </div>
             </>, 
@@ -97,7 +92,7 @@ const Product = () => {
     <div className='dasbord_laout text-white bgpr'>
         <div>
             <div className='flex items-center justify-between mb-5'>
-                <h2 className='text-[23px] font-semibold'>Product</h2>
+                <h2 className='text-[23px] font-semibold'>Coupon</h2>
             </div>
             <div className=' bg-primary text-white py-6 px-5 rounded-xl flex items-center justify-between '>
                 <div className='flex items-center gap-3'>
@@ -119,15 +114,15 @@ const Product = () => {
                     <   FaRegEdit style={{fontSize:"20px"}}/>
                         Delete
                     </button>
-                    <button onClick={()=>navigate("/add-product")} className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-green-500 hover:bg-green-700 duration-300 transition-all'>
+                    <button onClick={()=>navigate("/add-coupon")} className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-green-500 hover:bg-green-700 duration-300 transition-all'>
                         <FaRegEdit style={{fontSize:"20px"}}/>
-                        Add Product
+                        Add Coupon
                     </button>
                 </div>
             </div>
 
             <div className=' bg-primary text-white py-3 px-5 mt-8 rounded-lg'>
-                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By product Name Category Name Brand Name' />
+                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By Category Name' />
             </div>
 
             {
@@ -164,4 +159,4 @@ const Product = () => {
   )
 }
 
-export default Product
+export default Copun

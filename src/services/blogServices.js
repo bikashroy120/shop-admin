@@ -22,6 +22,6 @@ export const singalBlog  = async(id)=>{
 }
 
 export const deleteBlog  = async(data)=>{
-    const res = await Axios.delete(`/blog/delete/${data}`)
+    const res = await Axios.delete(`/blog/${data}`)
     return res
 }

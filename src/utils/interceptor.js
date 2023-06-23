@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 
 
 const onRequest = (config) => {
@@ -21,9 +22,9 @@ const onResponseError = async (error) => {
         // Access Token was expired
         if (error.response.status === 401) {
             console.log('*************JWT TOKEN EXPIRED !!****************')
-            // localStorage.clear();
-            // window.location.href = "/";
-            // toast.warn('Your session has expired. Please login again.');
+            localStorage.clear();
+            window.location.href = "/";
+            toast.warn('Your session has expired. Please login again.');
             // try {
             //     const rs = await axios.post(`${API_URL}/auth/token`, {
             //         refresh_token: storedToken.refresh_token,

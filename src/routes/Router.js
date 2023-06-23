@@ -16,6 +16,10 @@ import AddProduct from "../pages/AddProduct";
 import UpdateProduct from "../pages/UpdateProduct";
 import Blog from "../pages/Blog";
 import AddBlog from "../pages/AddBlog";
+import Copun from "../pages/Copun";
+import AddCoupon from "../pages/AddCoupon";
+import UpdateCoupon from "../pages/UpdateCoupon";
+import Profile from "../pages/Profile";
 
 const Router = () => {
   return (
@@ -38,6 +42,10 @@ const Router = () => {
       <Route path="/order" element={<SellCar />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/add-blog" element={<AddBlog />} />
+      <Route path="/coupon" element={<Copun />} />
+      <Route path="/add-coupon" element={<AddCoupon />} />
+      <Route path="/update-coupon/:id" element={<UpdateCoupon />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );

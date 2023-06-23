@@ -5,6 +5,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import {TbBrandBlogger,TbLogicOr} from "react-icons/tb"
 import { TbReportAnalytics,TbBrandAdonisJs } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import {CgProfile} from "react-icons/cg"
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import {GrProductHunt} from "react-icons/gr"
 import {BiCategory} from "react-icons/bi"
@@ -20,9 +21,9 @@ const Sidebar = ({open,setOpen}) => {
     { name: "Brand", link: "/brand", icon: TbBrandAdonisJs },
     { name: "Product", link: "/product", icon: GrProductHunt },
     { name: "Order", link: "/order", icon: TbReportAnalytics, margin: true },
-    { name: "Blog Category", link: "/blog-category", icon: TbLogicOr },
+    { name: "Coupon", link: "/coupon", icon: TbLogicOr },
     { name: "Blog", link: "/blog", icon: TbBrandBlogger },
-    { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
+    { name: "Profile", link: "/profile", icon: CgProfile, margin: true },
     { name: "Setting", link: "/settings", icon: RiSettings4Line },
   ];
   
