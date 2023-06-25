@@ -9,6 +9,7 @@ import {  getCategory } from '../services/categoryServices';
 import { ColorRing } from 'react-loader-spinner';
 import { singalProduct, updateProduct } from '../services/productServices';
 import { getBrand } from '../services/barndServices';
+import { base_url } from '../utils/base_url';
 
 
 
@@ -218,7 +219,7 @@ const { data} = useQuery(["product1",itemID],()=>singalProduct(itemID));
                         {
                             data.images.map((item,i)=>{
                                 return(
-                                    <img key={i} src={`http://localhost:5000/uploads/${item}`} alt="" className='w-[80px] h-[50px]' />
+                                    <img key={i} src={`${base_url}uploads/${item}`} alt="" className='w-[80px] h-[50px]' />
                                 )
                             })
                             

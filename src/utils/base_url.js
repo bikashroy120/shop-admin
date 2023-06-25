@@ -1,0 +1,1 @@
+export const base_url = "https://shop-api-plum.vercel.app/";

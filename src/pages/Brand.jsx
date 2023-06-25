@@ -80,7 +80,7 @@ const Brand = () => {
     <div className='dasbord_laout text-white bgpr'>
         <div>
             <div className='flex items-center justify-between mb-5'>
-                <h2 className='text-[23px] font-semibold'>Product Category</h2>
+                <h2 className='text-[23px] font-semibold'>Product Brand</h2>
             </div>
             <div className=' bg-primary text-white py-6 px-5 rounded-xl flex items-center justify-between '>
                 <div className='flex items-center gap-3'>
@@ -104,7 +104,7 @@ const Brand = () => {
                     </button>
                     <button onClick={()=>navigate("/add-brand")} className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-green-500 hover:bg-green-700 duration-300 transition-all'>
                         <FaRegEdit style={{fontSize:"20px"}}/>
-                        Add Category
+                        Add Brand
                     </button>
                 </div>
             </div>

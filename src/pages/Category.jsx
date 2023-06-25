@@ -9,6 +9,7 @@ import { deleteCategory, getCategory } from '../services/categoryServices';
 import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
+import { base_url } from '../utils/base_url';
 
 const Category = () => {
 
@@ -40,7 +41,7 @@ const Category = () => {
     const columns = [
         {
             name: 'Img',
-            selector: row => <img src={`http://localhost:5000/uploads/${row.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
+            selector: row => <img src={`${base_url}uploads/${row.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
         
         },
         {

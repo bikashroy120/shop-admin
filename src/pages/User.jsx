@@ -5,28 +5,28 @@ import {HiOutlineUpload,HiOutlineDownload} from "react-icons/hi";
 import {FaRegEdit} from "react-icons/fa"
 import Table from '../components/table/Table';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteCategory, getCategory } from '../services/categoryServices';
 import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
-import { deleteBlog, getBlog } from '../services/blogServices';
+import { deleteProduct, } from '../services/productServices';
 import { base_url } from '../utils/base_url';
+import { getUser } from '../services/authServices';
 
-const Blog = () => {
+const User = () => {
 
     const navigate =  useNavigate()
-    const { data, isLoading, error } = useQuery('blog', getBlog);
+    const { data, isLoading, error } = useQuery('user', getUser);
     const [show,setShow] = useState(false)
     const [deleteId,setDeleteId] = useState()
     const queryClient = useQueryClient()
     const [search,setSearch] = useState("")
     const [dataCa,setDataCA] = useState([])
 
-    const {mutate} = useMutation(deleteBlog, {
+    const {mutate} = useMutation(deleteProduct, {
         onSuccess: (data) => {
           // Invalidate and refetch
           toast.success("Delete success")
-          queryClient.invalidateQueries(['blog'])
+          queryClient.invalidateQueries(['product'])
           setShow(false)
         },
         onError:()=>{
@@ -34,43 +34,45 @@ const Blog = () => {
         }
       })
 
+      console.log(data)
+
+
       useEffect(()=>{
-        const updat = data?.filter((item)=>item.title.toLowerCase().trim().includes(search.toLowerCase()))
+        const updat = data?.filter((item)=>item.email.toLowerCase().trim().includes(search.toLowerCase()))
         setDataCA(updat)
       },[search,data])
 
     const columns = [
         {
             name: 'Img',
-            selector: row => <img src={`${base_url}uploads/${row.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
-            with:"100px"
+            selector: row => <img src={`${base_url}uploads/${row?.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
+            width:"100px"
         },
         {
-            name: 'Title',
-            selector: row => row.title,
-        },
-        {
-            name: 'View',
-            selector: row => row.numViews,
-        },
-        {
-            name: 'Category',
-            selector: row => row.category,
+            name: 'Name',
+            selector: row => row?.fastname + row?.lastname,
         },
 
         {
-            name: 'Description',
-            selector: row => row.description?.slice(0,50),
+            name: 'Email',
+            selector: row => row?.email,
         },
-
+        {
+            name: 'Phone',
+            selector: row => row?.mobile,
+        },
+        {
+            name: 'City',
+            selector: row => row?.city,
+        },
 
         {
             name:"Action",
             cell:(row)=> <>
                 <div className=' flex flex-row items-center gap-2'>
                     {/* <button><HiOutlineViewfinderCircle /></button> */}
-                    {/* <button onClick={()=>navigate(`/update-category/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button> */}
-                    <button onClick={()=>getId(row._id)} className=' text-[20px] hover:text-red-500' ><AiTwotoneDelete /></button>
+                    {/* <button onClick={()=>navigate(`/update-product/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button> */}
+                    <button onClick={()=>toast.error("দুঃখিত ইউজার পেইজের কাজ এখনো শেষ হয়নি")} className=' text-[20px] hover:text-red-500' ><AiTwotoneDelete /></button>
                 </div>
             </>, 
             width:"130px"
@@ -90,37 +92,12 @@ const Blog = () => {
     <div className='dasbord_laout text-white bgpr'>
         <div>
             <div className='flex items-center justify-between mb-5'>
-                <h2 className='text-[23px] font-semibold'>Blog</h2>
-            </div>
-            <div className=' bg-primary text-white py-6 px-5 rounded-xl flex items-center justify-between '>
-                <div className='flex items-center gap-3'>
-                    <button className=' flex items-center gap-3 text-[18px] border hover:border-green-500 border-white py-2 rounded-md px-3'>
-                        <HiOutlineUpload style={{fontSize:"20px"}}/>
-                        Export
-                    </button>
-                    <button className=' flex items-center gap-3 text-[18px] border border-white hover:border-yellow-400 py-2 rounded-md px-3'>
-                        <HiOutlineDownload style={{fontSize:"20px"}}/>
-                        Import
-                    </button>
-                </div>
-                <div className=' flex items-center gap-3'>
-                    <button className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-gray-300 hover:cursor-not-allowed text-gray-800'>
-                        <FaRegEdit style={{fontSize:"20px"}}/>
-                        Bulk Action
-                    </button>
-                    <button className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-red-500 hover:cursor-not-allowed'>
-                    <   FaRegEdit style={{fontSize:"20px"}}/>
-                        Delete
-                    </button>
-                    <button onClick={()=>navigate("/add-blog")} className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-green-500 hover:bg-green-700 duration-300 transition-all'>
-                        <FaRegEdit style={{fontSize:"20px"}}/>
-                        Add Blog
-                    </button>
-                </div>
+                <h2 className='text-[23px] font-semibold'>All User</h2>
             </div>
 
+
             <div className=' bg-primary text-white py-3 px-5 mt-8 rounded-lg'>
-                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By Title' />
+                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By email' />
             </div>
 
             {
@@ -157,4 +134,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default User

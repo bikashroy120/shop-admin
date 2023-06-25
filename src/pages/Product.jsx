@@ -9,6 +9,7 @@ import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
 import { deleteProduct, getProduct } from '../services/productServices';
+import { base_url } from '../utils/base_url';
 
 const Product = () => {
 
@@ -41,7 +42,7 @@ const Product = () => {
     const columns = [
         {
             name: 'Img',
-            selector: row => <img src={`http://localhost:5000/uploads/${row.images[0]}`} className={"w-[45px] h-[45px] rounded-full "}/>,
+            selector: row => <img src={`${base_url}uploads/${row.images[0]}`} className={"w-[45px] h-[45px] rounded-full "}/>,
             width:"100px"
         },
         {

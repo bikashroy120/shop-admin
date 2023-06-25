@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setupInterceptorsTo } from "./interceptor";
 
- const base_url = "http://localhost:5000/api";
+ const base_url = "https://shop-api-plum.vercel.app/api";
 
 const Axios = setupInterceptorsTo(
     axios.create({

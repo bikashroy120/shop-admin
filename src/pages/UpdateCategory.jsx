@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { singalCategory, updateCategory } from '../services/categoryServices';
 import { ColorRing } from 'react-loader-spinner';
+import { base_url } from '../utils/base_url';
 
 
 let schema = yup.object().shape({
@@ -114,7 +115,7 @@ const UpdateCategory = () => {
                 </div>
                 <div className='w-[70%]'>
                     {
-                      file ? <img src={URL.createObjectURL(file)} alt="" className='w-[80px] h-[50px]' /> : <img src={`http://localhost:5000/uploads/${data?.image}`} alt="" className='w-[80px] h-[50px]' />
+                      file ? <img src={URL.createObjectURL(file)} alt="" className='w-[80px] h-[50px]' /> : <img src={`${base_url}uploads/${data?.image}`} alt="" className='w-[80px] h-[50px]' />
                     }
                 </div>
             </div>

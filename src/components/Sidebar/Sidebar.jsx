@@ -16,7 +16,7 @@ const Sidebar = ({open,setOpen}) => {
 
   const menus = [
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "User", link: "/", icon: AiOutlineUser },
+    { name: "User", link: "/user", icon: AiOutlineUser },
     { name: "Category", link: "/category", icon: BiCategory },
     { name: "Brand", link: "/brand", icon: TbBrandAdonisJs },
     { name: "Product", link: "/product", icon: GrProductHunt },

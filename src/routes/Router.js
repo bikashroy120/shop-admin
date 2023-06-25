@@ -20,6 +20,8 @@ import Copun from "../pages/Copun";
 import AddCoupon from "../pages/AddCoupon";
 import UpdateCoupon from "../pages/UpdateCoupon";
 import Profile from "../pages/Profile";
+import User from "../pages/User";
+import Order from "../pages/Order";
 
 const Router = () => {
   return (
@@ -39,13 +41,14 @@ const Router = () => {
       <Route path="/add-product" element={<AddProduct />} />
       <Route path="/update-product/:id" element={<UpdateProduct />} />
       <Route path="/sell-car" element={<SellCar />} />
-      <Route path="/order" element={<SellCar />} />
+      <Route path="/order" element={<Order />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/add-blog" element={<AddBlog />} />
       <Route path="/coupon" element={<Copun />} />
       <Route path="/add-coupon" element={<AddCoupon />} />
       <Route path="/update-coupon/:id" element={<UpdateCoupon />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/user" element={<User />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );
