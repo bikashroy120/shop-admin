@@ -83,7 +83,7 @@ const AddProduct = () => {
   return (
     <div className='dasbord_laout text-white' >
         <div className='pb-5'>
-        <h2 className=' font-semibold text-[23px]'>Add Category</h2>
+        <h2 className=' font-semibold text-[23px]'>Add Product</h2>
           <p>Add your Product category and necessary information from here</p>
         </div>
 
@@ -91,7 +91,7 @@ const AddProduct = () => {
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Name</label>
                 <div className='w-[70%]'>
-                    <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Title' 
+                    <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Product Title' 
                       onChange={formik.handleChange("title")}
                       onBlur={formik.handleBlur("title")}
                       value={formik.values.title}  
@@ -105,7 +105,7 @@ const AddProduct = () => {
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Description</label>
                 <div className='w-[70%]'>
-                  <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Description'
+                  <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Product Description'
                     onChange={formik.handleChange("description")}
                     onBlur={formik.handleBlur("description")}
                     value={formik.values.description}    

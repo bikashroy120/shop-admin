@@ -8,37 +8,14 @@ import RecommendCarCard from "../components/UI/RecommendCarCard";
 
 import recommendCarsData from "../assets/dummy-data/recommendCars";
 import { useQuery } from "react-query";
-import { getOrder } from "../services/authServices";
+import { getDashbordData, getOrder } from "../services/authServices";
 import { toast } from "react-toastify";
 import Table from "../components/table/Table";
 import { base_url } from "../utils/base_url";
 
-const carObj = {
-  title: "Total Cars",
-  totalNumber: 750,
-  icon: "ri-police-car-line",
-};
-
-const tripObj = {
-  title: "Daily Trips",
-  totalNumber: 1697,
-  icon: "ri-steering-2-line",
-};
-
-const clientObj = {
-  title: "Clients Annually",
-  totalNumber: "85k",
-  icon: "ri-user-line",
-};
-
-const distanceObj = {
-  title: "Kilometers Daily",
-  totalNumber: 2167,
-  icon: "ri-timer-flash-line",
-};
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useQuery('order', getOrder);
+  const { data, isLoading, error } = useQuery('order', getDashbordData);
 
 
   const columns = [
@@ -46,10 +23,6 @@ const Dashboard = () => {
         name: 'Img',
         selector: row => <img src={`${base_url  }uploads/${row?.orderby.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
         width:"100px"
-    },
-    {
-        name: 'id',
-        selector: row => row?._id.slice(12,20),
     },
     {
         name: 'Name',
@@ -71,7 +44,7 @@ const Dashboard = () => {
 
     {
         name: 'Order Status',
-        selector: row => row?.orderStatus,
+        selector: row => <span className={`p-1 rounded-2xl ${row?.orderStatus ==="Pending" && "bg-red-500"} ${row?.orderStatus ==="Processing" && "bg-yellow-500"} ${row?.orderStatus ==="Complete" && "bg-green-500"}`}>{row?.orderStatus}</span>,
     },
 
     {
@@ -80,14 +53,16 @@ const Dashboard = () => {
     },
 ];
 
+console.log(data)
+
   return (
     <div className="dashboard w-full">
       <div className="dashboard__wrapper">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
-          <SingleCard item={carObj} />
-          <SingleCard item={tripObj} />
-          <SingleCard item={clientObj} />
-          <SingleCard item={distanceObj} />
+          <SingleCard title={"Totle Order"} totalNumber={data?.totalOrder} icon={"ri-shopping-cart-line"} />
+          <SingleCard title={"Pending Order"} totalNumber={data?.paddingOrder} icon={"ri-loader-3-fill"} />
+          <SingleCard title={"Processing Orde"} totalNumber={data?.ProcessingOrder} icon={"ri-truck-line"} />
+          <SingleCard title={"Complete Order"} totalNumber={data?.CompleteOrder} icon={"ri-check-line"} />
         </div>
 
         <div className="w-full grid lg:grid-cols-2 md:grid-cols-1 gap-5 mt-8 ">
@@ -118,7 +93,7 @@ const Dashboard = () => {
             {
                 isLoading ? (<h2>Lodding...</h2>) :(
                     <div className=' mt-2'>
-                        <Table columns={columns} data={data}/>
+                        <Table columns={columns} data={data.order}/>
                      </div>
                 )
             }

@@ -8,49 +8,60 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
-import { deleteProduct, } from '../services/productServices';
 import { base_url } from '../utils/base_url';
-import { getOrder } from '../services/authServices';
+import { getOrder, updateOrder } from '../services/authServices';
+
 
 const Order = () => {
 
     const navigate =  useNavigate()
     const { data, isLoading, error } = useQuery('order', getOrder);
     const [show,setShow] = useState(false)
-    const [deleteId,setDeleteId] = useState()
     const queryClient = useQueryClient()
     const [search,setSearch] = useState("")
+    const [filter,setFilter] = useState("All")
     const [dataCa,setDataCA] = useState([])
 
-    const {mutate} = useMutation(deleteProduct, {
+    const update = useMutation(updateOrder, {
         onSuccess: (data) => {
           // Invalidate and refetch
-          toast.success("Delete success")
-          queryClient.invalidateQueries(['product'])
-          setShow(false)
+          toast.success("Order update success")
+          queryClient.invalidateQueries(['order'])
         },
         onError:()=>{
           toast.error("error ")
         }
       })
 
-      console.log(data)
-
 
       useEffect(()=>{
-        const updat = data?.filter((item)=>item.email.toLowerCase().trim().includes(search.toLowerCase()))
+        const updat = data?.filter((item)=>item?.email.toLowerCase().trim().includes(search.toLowerCase()))
         setDataCA(updat)
       },[search,data])
+
+      useEffect(()=>{
+            if(filter==="All"){
+                setDataCA(data)
+            }else{
+                const updat = data?.filter((item)=>item.orderStatus===filter)
+                setDataCA(updat)
+            }
+      },[filter,data])
+
+      const handelChance = (e,id)=>{
+        const data = {
+            value:e.target.value,
+            id:id
+        }
+
+        update.mutate(data)
+      }
 
     const columns = [
         {
             name: 'Img',
             selector: row => <img src={`${base_url}uploads/${row?.orderby.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
             width:"100px"
-        },
-        {
-            name: 'id',
-            selector: row => row?._id.slice(12,20),
         },
         {
             name: 'Name',
@@ -68,50 +79,64 @@ const Order = () => {
         {
             name: 'Shipping',
             selector: row => row?.shipping,
+            width:"100px"
         },
 
         {
             name: 'Order Status',
-            selector: row => row?.orderStatus,
+            selector: row => <span className={`p-1 rounded-2xl ${row?.orderStatus ==="Pending" && "bg-red-500"} ${row?.orderStatus ==="Processing" && "bg-yellow-500"} ${row?.orderStatus ==="Complete" && "bg-green-500"}`}>{row?.orderStatus}</span>,
         },
 
         {
             name: 'Totle',
             selector: row => row?.totle,
+            width:"100px"
         },
 
         {
             name:"Action",
             cell:(row)=> <>
                 <div className=' flex flex-row items-center gap-2'>
-                    {/* <button><HiOutlineViewfinderCircle /></button> */}
-                    {/* <button onClick={()=>navigate(`/update-product/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button> */}
-                    <button onClick={()=>toast.error("দুঃখিত অর্ডার পেইজের কাজ এখনো শেষ হয়নি")} className=' text-[20px] hover:text-red-500' ><AiTwotoneDelete /></button>
+                    {
+                        update.isLoading ? <span>Loading...</span> :
+                        <select onChange={(e)=>handelChance(e,row?._id)} value={row.orderStatus} className=' bg-primary border border-white py-1 rounded-md px-1'>
+                        <option className='' value="Pending">Pending</option>
+                        <option className='' value="Processing">Processing</option>
+                        <option className='' value="Complete">Complete</option>
+                        </select>
+                    }
+
+                 
                 </div>
             </>, 
-            width:"130px"
+            // width:"130px"
         }
     ];
-
-    const getId= (id)=>{
-        setShow(true)
-        setDeleteId(id)
-    }
-
-    
 
 
     // add-category
   return (
     <div className='dasbord_laout text-white bgpr'>
         <div>
-            <div className='flex items-center justify-between mb-5'>
+            <div className='flex items-center justify-between'>
                 <h2 className='text-[23px] font-semibold'>All Order</h2>
             </div>
 
 
-            <div className=' bg-primary text-white py-3 px-5 mt-8 rounded-lg'>
-                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By email' />
+            <div className='flex items-center gap-3 w-full'>
+            <div className=' bg-primary text-white w-full py-3 px-5 mt-8 rounded-lg'>
+                <input type="text" onChange={(e)=>setSearch(e.target.value)} className=' py-3 px-5 bg-gray-700 outline-none w-full rounded-md' placeholder='Search By Name' />
+            </div>
+
+
+            <div className=' bg-primary w-full text-white py-3 px-5 mt-8 rounded-lg'>
+                    <select onChange={(e)=>setFilter(e.target.value)} value={filter} className=' bg-primary border border-white w-full py-3  rounded-md px-5'>
+                        <option className='' value="All">All </option>
+                        <option className='' value="Pending">Pending</option>
+                        <option className='' value="Processing">Processing</option>
+                        <option className='' value="Complete">Complete</option>
+                        </select>
+            </div>
             </div>
 
             {

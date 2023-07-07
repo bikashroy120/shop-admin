@@ -21,7 +21,7 @@ const AddBrand = () => {
     onSuccess: (data) => {
       // Invalidate and refetch
       formik.resetForm()
-      toast.success("Add Category success")
+      toast.success("Add Brand success")
     },
     onError:()=>{
       toast.error("error ")
@@ -54,7 +54,7 @@ const AddBrand = () => {
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Name</label>
                 <div className='w-[70%]'>
-                    <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Title' 
+                    <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Brand Title' 
                       onChange={formik.handleChange("title")}
                       onBlur={formik.handleBlur("title")}
                       value={formik.values.title}  
@@ -68,7 +68,7 @@ const AddBrand = () => {
             <div className=' flex items-start justify-between my-10'>
                 <label className=' text-[18px] font-medium' htmlFor="">Description</label>
                 <div className='w-[70%]'>
-                  <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Description'
+                  <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Brand Description'
                     onChange={formik.handleChange("description")}
                     onBlur={formik.handleBlur("description")}
                     value={formik.values.description}    
@@ -90,7 +90,7 @@ const AddBrand = () => {
                           wrapperStyle={{}}
                           wrapperClass="blocks-wrapper"
                           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                        /> ) : "Add Category"}</button>
+                        /> ) : "Add Brand"}</button>
             </div>
 
         </form>
