@@ -1,13 +1,13 @@
-import { AxiosM,Axios } from "../utils/Axios"
+import { Axios } from "../utils/Axios"
 
 
 export const addCategory  = async(data)=>{
-    const res = await AxiosM.post("/product-category",data)
+    const res = await Axios.post("/product-category",data)
     return res
 }
 
 export const updateCategory  = async(data,itemID)=>{
-    const res = await AxiosM.put(`/product-category/${itemID}`,data)
+    const res = await Axios.put(`/product-category/${itemID}`,data)
     return res
 }
 
