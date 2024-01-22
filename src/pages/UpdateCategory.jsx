@@ -96,11 +96,11 @@ const UpdateCategory = () => {
               onSubmit={formik.handleSubmit}
               className=" bg-primary py-8 rounded-lg px-5"
             >
-              <div className=" flex items-start justify-between my-10">
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
                 <label className=" text-[18px] font-medium" htmlFor="">
                   Name
                 </label>
-                <div className="w-[70%]">
+                <div className="md:w-[70%] w-full">
                   <input
                     type="text"
                     className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
@@ -117,11 +117,11 @@ const UpdateCategory = () => {
                   </div>
                 </div>
               </div>
-              <div className=" flex items-start justify-between my-10">
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
                 <label className=" text-[18px] font-medium" htmlFor="">
                   Description
                 </label>
-                <div className="w-[70%]">
+                <div className="md:w-[70%] w-full">
                   <textarea
                     name=""
                     id=""
@@ -142,11 +142,11 @@ const UpdateCategory = () => {
                 </div>
               </div>
 
-              <div className=" flex items-start justify-between my-10">
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
                 <label className=" text-[18px] font-medium" htmlFor="">
                   Image
                 </label>
-                <div className="w-[70%]">
+                <div className="md:w-[70%] w-full">
                   <div className="w-full my-3">
                     <div className="md:flex items-center gap-2">
                       {/* <p className="text-info text-lg font-bold">Icon:</p> */}
@@ -179,16 +179,16 @@ const UpdateCategory = () => {
                 </div>
               </div>
 
-              <div className=" flex items-center justify-center gap-6 py-5 ">
+              <div className=" flex items-center flex-col md:flex-row  justify-center gap-6 py-5 ">
                 <button
                   onClick={() => navgate("/category")}
-                  className=" py-3 px-10 rounded-lg bg-gray-600 text-white "
+                  className=" py-3 px-10 rounded-lg bg-gray-600 w-full md:w-auto text-white "
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className=" py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300"
+                  className=" py-3 px-10 rounded-lg w-full md:w-auto bg-green-600 hover:bg-green-700 duration-300"
                 >
                   {isLoading ? "Loading..." : "Add Category"}
                 </button>

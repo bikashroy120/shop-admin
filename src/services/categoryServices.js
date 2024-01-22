@@ -11,8 +11,8 @@ export const updateCategory  = async(data,itemID)=>{
     return res
 }
 
-export const getCategory  = async()=>{
-    const res = await Axios.get("/product-category")
+export const getCategory  = async(searchQuery)=>{
+    const res = await Axios.get(`/product-category?${searchQuery}`)
     return res.data
 }
 

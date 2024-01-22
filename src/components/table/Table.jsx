@@ -52,13 +52,12 @@ const Table = ({columns,data}) => {
     };
 
   return (
-    <div className=' bg-primary text-white rounded-lg overflow-hidden border border-[#808191]'>
+    <div className=' bg-primary text-white  '>
         <DataTable
             columns={columns}
             data={data && data}
             theme="solarized"
             customStyles={customStyles}
-            pagination
         />
     </div>
   )

@@ -36,11 +36,11 @@ a {
 }
 
 .main__layout {
-  margin-left: 260px;
+  margin-left: 230px;
 }
 
 .main__layout2 {
-  margin-left: 60px;
+  margin-left: 50px;
 }
 
 img {
@@ -82,6 +82,10 @@ img {
 
 @media screen and (max-width: 880px) {
   .main__layout2 {
-    margin-left: 25px;
+    margin-left: 45px;
+  }
+  .dasbord_laout{
+    padding: 0px 10px;
+
   }
 }
