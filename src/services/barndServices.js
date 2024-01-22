@@ -11,8 +11,8 @@ export const updateBrand  = async(data,itemID)=>{
     return res
 }
 
-export const getBrand  = async()=>{
-    const res = await Axios.get("/brand")
+export const getBrand  = async(searchQuery)=>{
+    const res = await Axios.get(`/brand?${searchQuery}`)
     return res.data
 }
 

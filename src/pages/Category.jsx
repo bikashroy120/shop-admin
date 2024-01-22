@@ -121,7 +121,7 @@ const Category = () => {
         </div>
 
         <div className=" bg-primary text-white py-2 mt-8 rounded-lg">
-          <div className="w-[50%] pt-4 px-5">
+          <div className="md:w-[50%] w-full pt-4 px-5">
             <input
               type="text"
               onChange={(e) => setSearch(e.target.value)}
