@@ -1,6 +1,6 @@
 import "./App.css";
 import Layout from "./components/Layout/Layout";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Login from "./pages/Login";
 import {
   QueryClient,

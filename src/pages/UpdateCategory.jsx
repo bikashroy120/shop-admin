@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FiUploadCloud } from "react-icons/fi";
+import { useNavigate, useParams } from "react-router-dom";
+
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { singalCategory, updateCategory } from "../services/categoryServices";
-import { ColorRing } from "react-loader-spinner";
-import { base_url } from "../utils/base_url";
 import PageTitle from "../ui/PageTitle";
 import Loader from "../components/UI/Loader";
 

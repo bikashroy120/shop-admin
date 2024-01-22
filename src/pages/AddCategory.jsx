@@ -6,7 +6,6 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import { addCategory } from "../services/categoryServices";
-import { ColorRing } from "react-loader-spinner";
 import PageTitle from "../ui/PageTitle";
 
 let schema = yup.object().shape({
