@@ -14,7 +14,7 @@ import { base_url } from '../utils/base_url';
 const Category = () => {
 
     const navigate =  useNavigate()
-    const { data, isLoading, error } = useQuery('category', getCategory);
+    const { data, isLoading } = useQuery('category', getCategory);
     const [show,setShow] = useState(false)
     const [deleteId,setDeleteId] = useState()
     const queryClient = useQueryClient()
@@ -84,29 +84,11 @@ const Category = () => {
   return (
     <div className='dasbord_laout text-white bgpr'>
         <div>
-            <div className='flex items-center justify-between mb-5'>
-                <h2 className='text-[23px] font-semibold'>Product Category</h2>
-            </div>
             <div className=' bg-primary text-white py-6 px-5 rounded-xl flex items-center justify-between '>
                 <div className='flex items-center gap-3'>
-                    <button className=' flex items-center gap-3 text-[18px] border hover:border-green-500 border-white py-2 rounded-md px-3'>
-                        <HiOutlineUpload style={{fontSize:"20px"}}/>
-                        Export
-                    </button>
-                    <button className=' flex items-center gap-3 text-[18px] border border-white hover:border-yellow-400 py-2 rounded-md px-3'>
-                        <HiOutlineDownload style={{fontSize:"20px"}}/>
-                        Import
-                    </button>
+                    <h2 className='text-[23px] font-semibold'>Product Category</h2>
                 </div>
                 <div className=' flex items-center gap-3'>
-                    <button className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-gray-300 hover:cursor-not-allowed text-gray-800'>
-                        <FaRegEdit style={{fontSize:"20px"}}/>
-                        Bulk Action
-                    </button>
-                    <button className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-red-500 hover:cursor-not-allowed'>
-                    <   FaRegEdit style={{fontSize:"20px"}}/>
-                        Delete
-                    </button>
                     <button onClick={()=>navigate("/add-category")} className=' flex items-center gap-2 py-3 px-10 rounded-lg bg-green-500 hover:bg-green-700 duration-300 transition-all'>
                         <FaRegEdit style={{fontSize:"20px"}}/>
                         Add Category

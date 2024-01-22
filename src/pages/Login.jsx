@@ -26,7 +26,7 @@ const Login = () => {
           toast.success("Login success")
         },
         onError:()=>{
-          toast.error("You Not Admin")
+          toast.error("You are Not Admin")
         }
       })
 
@@ -75,7 +75,7 @@ const Login = () => {
                         {formik.touched.password && formik.errors.password}
                       </div>
                     </div>
-                    <button type='submit' className=' py-3 mt-4 rounded-lg text-[18px] font-semibold hover:bg-green-600 duration-300 transition-all px-10 bg-green-500'>Login</button>
+                    <button type='submit' className=' py-3 mt-4 rounded-lg text-[18px] font-semibold hover:bg-green-600 duration-300 transition-all px-10 bg-green-500'>{isLoading ? "loading..." : "Login"}</button>
                 </form>
             </div>
         </div>
