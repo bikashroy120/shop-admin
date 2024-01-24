@@ -89,3 +89,59 @@ img {
 
   }
 }
+
+
+/* --------------------ant table pagination---------------- */
+
+.ant-pagination-next {
+  margin-right: 22px !important;
+}
+
+
+/* .ant-pagination-prev {
+  border-radius: 8px !important;
+  padding: 0px 6px !important;
+  background-color: #dfdfe046;
+
+} */
+
+.ant-pagination-item-link {
+  color: #fff !important;
+}
+
+.ant-pagination-item-link:disabled {
+  color: rgba(157, 158, 163, 0.8) !important;
+}
+
+/* .ant-pagination-next {
+  border-radius: 8px !important;
+  margin-left: 8px !important;
+  padding: 0px 6px !important;
+  background-color: #dfdfe046;
+}
+
+
+.ant-pagination-item {
+  border-radius: 8px !important;
+  margin: 0px !important;
+
+} */
+
+
+.ant-pagination-item a {
+  color: #fff !important;
+
+}
+
+.ant-pagination-item-active {
+  background-color: #01d293 !important;
+  border: 1px solid #654dff00 !important;
+  color: #fff !important;
+}
+
+.ant-pagination-item-active a {
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+
+}

@@ -7,8 +7,8 @@ export const adminLogin  = async(data)=>{
     return res
 }
 
-export const getUser  = async()=>{
-    const res = await Axios.get("/user/")
+export const getUser  = async(searchQuery)=>{
+    const res = await Axios.get(`/user?${searchQuery}`)
     return res.data
 }
 
