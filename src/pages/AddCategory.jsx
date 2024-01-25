@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import { addCategory } from "../services/categoryServices";
 import PageTitle from "../ui/PageTitle";
+import { key } from "../utils/base_url";
 
 let schema = yup.object().shape({
   title: yup.string().required("title is Required"),
@@ -28,7 +29,7 @@ const AddCategory = () => {
     },
   });
 
-  const imgUrl = `https://api.imgbb.com/1/upload?key=8afa748431eb08431e4d3e8918c75005`;
+  const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
     const image = e.target.files[0];
     const formData = new FormData();

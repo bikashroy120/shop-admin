@@ -52,7 +52,7 @@ const Table = ({columns,data}) => {
     };
 
   return (
-    <div className=' bg-primary text-white  border-b border-b-gray-500 '>
+    <div className=' bg-primary text-white  '>
         <DataTable
             columns={columns}
             data={data && data}

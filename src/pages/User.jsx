@@ -142,11 +142,11 @@ const User = () => {
               <Loader />
             </>
           ) : (
-            <div className=" mt-5">
+            <div className=" mt-5 border-b border-b-gray-500">
               <Table columns={columns} data={data?.user} />
             </div>
           )}
-          <div className="flex items-center justify-end py-5 px-5">
+          <div className="flex items-center justify-end py-2 pt-3 px-5">
             {isLoading ? (
               <> </>
             ) : (

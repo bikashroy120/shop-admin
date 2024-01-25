@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { singalCategory, updateCategory } from "../services/categoryServices";
 import PageTitle from "../ui/PageTitle";
 import Loader from "../components/UI/Loader";
+import { key } from "../utils/base_url";
 
 let schema = yup.object().shape({
   title: yup.string().required("title is Required"),
@@ -43,7 +44,7 @@ const UpdateCategory = () => {
 
   console.log(data);
 
-  const imgUrl = `https://api.imgbb.com/1/upload?key=8afa748431eb08431e4d3e8918c75005`;
+  const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
     const image = e.target.files[0];
     const formData = new FormData();
@@ -169,7 +170,7 @@ const UpdateCategory = () => {
                         <div className="  w-[200px] h-auto p-1 bg-white shadow-md rounded-md mt-3 ">
                           <img
                             src={file}
-                            alt="category image"
+                            alt="category"
                             className="w-full h-full object-contain "
                           />
                         </div>
