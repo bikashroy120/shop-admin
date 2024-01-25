@@ -1,272 +1,308 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import {FiUploadCloud} from "react-icons/fi"
-import * as yup from "yup";
-import { useFormik } from 'formik';
-import { toast } from 'react-toastify';
-import { useMutation, useQuery } from 'react-query';
-import {  getCategory } from '../services/categoryServices';
-import { ColorRing } from 'react-loader-spinner';
-import { singalProduct, updateProduct } from '../services/productServices';
-import { getBrand } from '../services/barndServices';
-import { base_url } from '../utils/base_url';
-
-
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useMutation, useQuery } from "react-query";
+import { getCategory } from "../services/categoryServices";
+import { singalProduct, updateProduct } from "../services/productServices";
+import { getBrand } from "../services/barndServices";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import PageTitle from "../ui/PageTitle";
+import { key } from "../utils/base_url";
+import { MdDeleteForever } from "react-icons/md";
 
 const UpdateProduct = () => {
-  const navgate =  useNavigate()
-  const brands = useQuery('brand', getBrand);
-  const categorys = useQuery('category', getCategory);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [title,settitle] = useState()
-  const [description,setdescription] = useState()
-  const [bprice,setbprice] = useState()
-  const [price,setprice] = useState()
-  const [category,setcategory] = useState()
-  const [brand,setbrand] = useState()
-  const [quantity,setquantity] = useState()
-  const parems = useParams()
-  const itemID = parems.id
-
-//   const handleFileChange = (event) => {
-//     const file = Array.from(event.target.files)
-//     setSelectedFiles((pre)=>[...pre,...file])
-//   };
+  const navgate = useNavigate();
+  const brands = useQuery("brand", getBrand);
+  const categorys = useQuery("category", getCategory);
+  const [title, settitle] = useState();
+  const [description, setdescription] = useState();
+  const [bprice, setbprice] = useState();
+  const [price, setprice] = useState();
+  const [category, setcategory] = useState();
+  const [brand, setbrand] = useState();
+  const [quantity, setquantity] = useState();
+  const [imageUrl, setImageUrl] = useState([]);
+  const [imageLoading, setImageLoading] = useState(false);
+  const parems = useParams();
+  const itemID = parems.id;
 
 
-const { data} = useQuery(["product1",itemID],()=>singalProduct(itemID));
-  const {mutate, isLoading} = useMutation((data)=>updateProduct(data,itemID), {
-    onSuccess: (data) => {
-      // Invalidate and refetch
-      setSelectedFiles([])
-      toast.success("Update Product success")
-      navgate('/product')
-    },
-    onError:()=>{
-      toast.error("error ")
+  const { data,isSuccess } = useQuery(["product1", itemID], () => singalProduct(itemID));
+  const { mutate, isLoading } = useMutation(
+    (data) => updateProduct(data, itemID),
+    {
+      onSuccess: (data) => {
+        // Invalidate and refetch
+        toast.success("Update Product success");
+        navgate("/product");
+      },
+      onError: () => {
+        toast.error("error ");
+      },
     }
-  })
-
-    // useEffect(()=>{
-    //   formik.values.image = selectedFiles
-    // },[selectedFiles])
-
-    // const formik = useFormik({
-    //   initialValues: {
-    //     title: "",
-    //     description:"",
-    //     image:[],
-    //     bprice:"",
-    //     price:"",
-    //     category:"",
-    //     brand:"",
-    //     quantity:"",
-    //   },
-    //   validationSchema: schema,
-    //   onSubmit: (values) => {
-    //     const formData = new FormData();
-    //     formData.append('title', values.title);
-    //     formData.append('description', values.description);
-    //     formData.append('bprice', values.bprice);
-    //     formData.append('price', values.price);
-    //     formData.append('category', values.category);
-    //     formData.append('brand', values.brand);
-    //     formData.append('quantity', values.quantity);
-    //     values.image.forEach((file) => {
-    //         formData.append('image', file);
-    //       });
-
-    //     mutate(formData)
-    //   },
-    // });
-
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        const data= {
-        title,
-        description,
-        bprice,
-        price,
-        category,
-        brand,
-        quantity,
-        }
-        mutate(data)
-      }
+  );
 
 
-      useEffect(()=>{
-        settitle(data?.title)
-        setdescription(data?.description)
-        setbprice(data?.bprice)
-        setprice(data?.price)
-        setbrand(data?.brand._id)
-        setcategory(data?.category._id)
-        setquantity(data?.quantity)
-      },[data])
+  const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
+  const handleImageUpload = (e) => {
+    setImageLoading(true);
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    fetch(imgUrl, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        let newImageUrls = [...imageUrl];
+        newImageUrls.push(result.data?.url);
+        setImageUrl(newImageUrls);
+        toast.success("Image upload success!");
+        setImageLoading(false);
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Image upload file");
+        setImageLoading(false);
+      });
+  };
 
+  // ------------------------remove image-----------------------------
+  const handleRemoveImage = (index) => {
+    imageUrl.splice(index, 1);
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      title,
+      description,
+      bprice,
+      price,
+      category,
+      brand,
+      quantity,
+      images:imageUrl,
+    };
+    mutate(data);
+  };
+
+  useEffect(() => {
+    settitle(data?.title);
+    setdescription(data?.description);
+    setbprice(data?.bprice);
+    setprice(data?.price);
+    setbrand(data?.brand);
+    setcategory(data?.category);
+    setquantity(data?.quantity);
+    setImageUrl(data?.images)
+  }, [isSuccess,data]);
 
   return (
-    <div className='dasbord_laout text-white' >
-        <div className='pb-5'>
-        <h2 className=' font-semibold text-[23px]'>Update Product</h2>
-          <p>Update your Product and necessary information from here</p>
+    <div className="dasbord_laout text-white">
+
+      <PageTitle title={"Update Product"} />
+
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className=" bg-primary py-8 rounded-lg px-5"
+      >
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Name
+          </label>
+          <div className="md:w-[70%] w-full">
+            <input
+              type="text"
+              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              placeholder="Category Title"
+              onChange={(e) => settitle(e.target.value)}
+              value={title}
+            />
+          </div>
         </div>
 
-        <form onSubmit={(e)=>handleSubmit(e)} className=" bg-primary py-8 rounded-lg px-5">
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Name</label>
-                <div className='w-[70%]'>
-                    <input type="text" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Title' 
-                      onChange={(e)=>settitle(e.target.value)}
-                      value={title}  
-                    
-                    />
-                </div>
-            </div>
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Description</label>
-                <div className='w-[70%]'>
-                  <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Category Description'
-                    onChange={(e)=>setdescription(e.target.value)}
-                    value={description}    
-                  ></textarea>
-                </div>
-            </div>
-            
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Buy Price</label>
-                <div className='w-[70%]'>
-                    <input type="number" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Buy Price...' 
-                      onChange={(e)=>setbprice(e.target.value)}
-                      value={bprice}  
-                    />
-                </div>
-            </div>
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Description
+          </label>
+          <div className="md:w-[70%] w-full">
+            <ReactQuill
+              //   theme="snow"
+              value={description}
+              onChange={setdescription}
+              style={{
+                height: 200,
+                marginBottom: 50,
+                borderRadius: 10,
+                border: "none",
+              }}
+            />
+          </div>
+        </div>
 
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Sale Price</label>
-                <div className='w-[70%]'>
-                    <input type="number" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Price...' 
-                      onChange={(e)=>setprice(e.target.value)}
-                      value={price}         
-                    />
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Buy Price
+          </label>
+          <div className="md:w-[70%] w-full">
+            <input
+              type="number"
+              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              placeholder="Buy Price..."
+              onChange={(e) => setbprice(e.target.value)}
+              value={bprice}
+            />
+          </div>
+        </div>
+
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Sale Price
+          </label>
+          <div className="md:w-[70%] w-full">
+            <input
+              type="number"
+              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              placeholder="Price..."
+              onChange={(e) => setprice(e.target.value)}
+              value={price}
+            />
+          </div>
+        </div>
+
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Product Category
+          </label>
+          <div className="w-full md:w-[70%]">
+            <select
+              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              name="cars"
+              id="cars"
+              onChange={(e) => setcategory(e.target.value)}
+              value={category}
+            >
+              <option className="" value="">
+                Select Category
+              </option>
+              {categorys.data?.map((item, i) => {
+                return (
+                  <option key={i} className="" value={item.title}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Product Brand
+          </label>
+          <div className="md:w-[70%] w-full">
+            <select
+              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              name="cars"
+              id="cars"
+              onChange={(e) => setbrand(e.target.value)}
+              value={brand}
+            >
+              <option className="" value="">
+                Select Brand
+              </option>
+              {brands.data?.map((item, i) => {
+                return (
+                  <option key={i} className="" value={item.title}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Quantity
+          </label>
+          <div className="md:w-[70%] w-full">
+            <input
+              type="number"
+              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              placeholder="Buy Price..."
+              onChange={(e) => setquantity(e.target.value)}
+              value={quantity}
+            />
+          </div>
+        </div>
+
+        <div className=" flex items-start  flex-col md:flex-row  justify-between my-10">
+          <label className=" text-[18px] font-medium" htmlFor="">
+            Image
+          </label>
+          <div className="md:w-[70%] w-full">
+            <div className="w-full my-3">
+              <div className="md:flex items-center gap-2">
+                {/* <p className="text-info text-lg font-bold">Icon:</p> */}
+                <div className="relative border-2 rounded-lg border-gray-400 border-dashed w-full h-[100px]  text-center flex items-center justify-center flex-col">
+                  <p className="text-xl font-bold  ">Drag your image here</p>
+                  <span className="text-xs font-bold ">
+                    (Only *.jpeg and *.png images will be accepted)
+                  </span>
+                  <input
+                    type="file"
+                    onChange={handleImageUpload}
+                    className="opacity-0 absolute top-0 left-0 bottom-0 right-0 w-full h-full cursor-pointer"
+                  />
                 </div>
-            </div>
-
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Product Category</label>
-                <div className='w-[70%]'>
-                    <select  className=' w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg ' name="cars" id="cars"     
-                    onChange={(e)=>setcategory(e.target.value)}
-                    value={category} 
-                    >
-                        <option className='' value="">Select Category</option>
-                        {
-                            categorys.data?.map((item,i)=>{
-                                return(
-                                    <option key={i} className='' value={item._id}>{item.title}</option>
-                                )
-                            })
-                        }
-                    </select>
+              </div>
+                {
+                  imageLoading &&  <div>
+                  <h2>uploading...</h2>
                 </div>
-            </div>
-
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Product Brand</label>
-                <div className='w-[70%]'>
-                    <select  className=' w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg ' name="cars" id="cars"     
-                    onChange={(e)=>setbrand(e.target.value)}
-                    value={brand} 
-                    >
-                        <option className='' value="">Select Brand</option>
-                        {
-                            brands.data?.map((item,i)=>{
-                                return(
-                                    <option key={i} className='' value={item._id}>{item.title}</option>
-                                )
-                            })
-                        }
-                    </select>
+                }
+              {imageUrl && (
+                <div className="flex justify-center gap-2 sm:justify-start ">
+                  {
+                    imageUrl.map((file,index)=>(
+                      <div key={index} className=" group relative w-[100px] h-[60px] rounded-lg   shadow-md overflow-hidden mt-3 ">
+                      <img
+                        src={file}
+                        alt="product"
+                        className="w-full h-full object-cover"
+                      />
+                        <button type="button" onClick={()=>handleRemoveImage(index)} className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"><MdDeleteForever /></button>
+                    </div>
+                    ))
+                  }
                 </div>
+              )}
             </div>
+          </div>
+        </div>
 
-
-            <div className=' flex items-start justify-between my-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Quantity</label>
-                <div className='w-[70%]'>
-                    <input type="number" className=' w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Buy Price...' 
-                      onChange={(e)=>setquantity(e.target.value)}
-                      value={quantity}  
-                    
-                    />
-                </div>
-            </div>
-
-
-            <div className=' flex items-start justify-between mt-10'>
-                <label className=' text-[18px] font-medium' htmlFor="">Image</label>
-                {/* <label htmlFor="id" className=' flex flex-col items-center gap-2 justify-center py-5 w-[70%] cursor-pointer border border-dashed rounded-lg border-gray-400'>
-                    <FiUploadCloud className=' text-[45px] text-green-600' />
-                    <h2 className='text-[20px] font-medium'>Drag your images here</h2>
-                    <p>(Only *.jpeg, *.webp and *.png images will be accepted)</p>
-                    <input id='id' type="file" multiple onChange={handleFileChange} className=' hidden' />
-                </label> */}
-            <div className='w-[70%] flex items-center gap-3'>
-                    {
-                      data ? <>
-                        {
-                            data.images.map((item,i)=>{
-                                return(
-                                    <img key={i} src={`${base_url}uploads/${item}`} alt="" className='w-[80px] h-[50px]' />
-                                )
-                            })
-                            
-                        }
-                      
-                      </> : null
-                    }
-                </div>
-            </div>
-            <div className=' h-[70px] flex items-start justify-between'>
-                <div>
-
-                </div>
-                <div className='w-[70%] flex items-center gap-3'>
-                    {
-                      selectedFiles ? <>
-                        {
-                            selectedFiles.map((item,i)=>{
-                                return(
-                                    <img key={i} src={URL.createObjectURL(item)} alt="" className='w-[80px] h-[50px]' />
-                                )
-                            })
-                            
-                        }
-                      
-                      </> : null
-                    }
-                </div>
-            </div>
-            
-            <div className=' flex items-center justify-center gap-6 py-5 '>
-                <button onClick={()=>navgate("/product")} className=' py-3 px-10 rounded-lg bg-gray-600 text-white '>Cancel</button>
-                <button type='submit' className=' py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300'>{isLoading ? ( 
-                        <ColorRing
-                          visible={true}
-                          height="30"
-                          width="30"
-                          ariaLabel="blocks-loading"
-                          wrapperStyle={{}}
-                          wrapperClass="blocks-wrapper"
-                          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                        /> ) : "Update Product"}</button>
-            </div>
-
-        </form>
+        <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+          <button
+            onClick={() => navgate("/product")}
+            className=" py-3 px-10 rounded-lg w-full md:w-auto bg-gray-600 text-white "
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className=" py-3 px-10 w-full md:w-auto rounded-lg bg-green-600 hover:bg-green-700 duration-300"
+          >
+            {isLoading ? "Loading..." : "Update Product"}
+          </button>
+        </div>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default UpdateProduct
+export default UpdateProduct;

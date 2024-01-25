@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
 import { getCategory } from "../services/categoryServices";
-import { ColorRing } from "react-loader-spinner";
 import { addProduct } from "../services/productServices";
 import { getBrand } from "../services/barndServices";
 import PageTitle from "../ui/PageTitle";
@@ -81,7 +80,7 @@ const AddProduct = () => {
         brand:values.brand,
         quantity:values.quantity,
         sku:values.sku,
-        image:imageUrl,
+        images:imageUrl,
       }
 
       mutate(data);
@@ -112,8 +111,6 @@ const AddProduct = () => {
       });
   };
 
-
-  console.log("============================",imageUrl)
   // ------------------------remove image-----------------------------
   const handleRemoveImage = (index) => {
     imageUrl.splice(index, 1);
