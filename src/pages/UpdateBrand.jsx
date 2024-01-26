@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FiUploadCloud } from "react-icons/fi";
-import * as yup from "yup";
-import { useFormik } from "formik";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ColorRing } from "react-loader-spinner";
 import { singalBrand, updateBrand } from "../services/barndServices";
 import Loader from "../components/UI/Loader";
 import PageTitle from "../ui/PageTitle";
 
-let schema = yup.object().shape({
-  title: yup.string().required("title is Required"),
-  description: yup.string().required("description is Required"),
-});
 
 const UpdateBrand = () => {
   const parems = useParams();
