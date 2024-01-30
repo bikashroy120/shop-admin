@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { addBlog, singalBlog, updateBlog } from "../services/blogServices";
+import { singalBlog, updateBlog } from "../services/blogServices";
 import PageTitle from "../ui/PageTitle";
 import { key } from "../utils/base_url";
 import Loader from "../components/UI/Loader";

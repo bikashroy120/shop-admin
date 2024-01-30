@@ -11,13 +11,13 @@ export const updateBlog  = async(data,itemID)=>{
     return res
 }
 
-export const getBlog  = async()=>{
-    const res = await Axios.get("/blog")
+export const getBlog  = async(searchQuery)=>{
+    const res = await Axios.get(`/blog?${searchQuery}`)
     return res.data
 }
 
 export const singalBlog  = async(id)=>{
-    const res = await Axios.get(`/blog/${id}`)
+    const res = await Axios.get(`/blog/admin/${id}`)
     return res.data
 }
 
