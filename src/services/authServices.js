@@ -17,6 +17,11 @@ export const getOrder  = async()=>{
     return res.data
 }
 
+export const updateUser  = async(data)=>{
+    const res = await Axios.put(`/user/update/`,data)
+    return res.data
+}
+
 export const updateOrder  = async(data)=>{
     const res = await Axios.put(`/user/order-update/${data.id}`,{status:data.value})
     return res.data
