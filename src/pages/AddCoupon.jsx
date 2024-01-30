@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import { addCoupon } from "../services/couponServices";
 import { key } from "../utils/base_url";
+import PageTitle from "../ui/PageTitle";
 
 let schema = yup.object().shape({
   title: yup.string().required("Coupon Title is Required"),
@@ -72,11 +73,7 @@ const AddCoupon = () => {
 
   return (
     <div className="dasbord_laout text-white">
-      <div className="pb-5">
-        <h2 className=" font-semibold text-[23px]">Add Coupon</h2>
-        <p>Add your Coupon and necessary information from here</p>
-      </div>
-
+      <PageTitle title={"Add Coupon"} />
       <form
         onSubmit={formik.handleSubmit}
         className=" bg-primary py-8 rounded-lg px-5"
