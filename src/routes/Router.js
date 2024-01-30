@@ -21,6 +21,7 @@ import UpdateCoupon from "../pages/UpdateCoupon";
 import Profile from "../pages/Profile";
 import User from "../pages/User";
 import Order from "../pages/Order";
+import UpdateBlog from "../pages/UpdateBlog";
 
 const Router = () => {
   return (
@@ -43,6 +44,7 @@ const Router = () => {
       <Route path="/order" element={<Order />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/add-blog" element={<AddBlog />} />
+      <Route path="/update-blog/:id" element={<UpdateBlog />} />
       <Route path="/coupon" element={<Copun />} />
       <Route path="/add-coupon" element={<AddCoupon />} />
       <Route path="/update-coupon/:id" element={<UpdateCoupon />} />

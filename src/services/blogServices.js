@@ -1,4 +1,4 @@
-import { AxiosM,Axios } from "../utils/Axios"
+import { Axios } from "../utils/Axios"
 
 
 export const addBlog  = async(data)=>{
@@ -7,7 +7,7 @@ export const addBlog  = async(data)=>{
 }
 
 export const updateBlog  = async(data,itemID)=>{
-    const res = await AxiosM.put(`/blog/${itemID}`,data)
+    const res = await Axios.put(`/blog/${itemID}`,data)
     return res
 }
 

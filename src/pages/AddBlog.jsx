@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUploadCloud } from "react-icons/fi";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
-import { ColorRing } from "react-loader-spinner";
 import { addBlog } from "../services/blogServices";
 import PageTitle from "../ui/PageTitle";
 import { key } from "../utils/base_url";
@@ -65,7 +63,7 @@ const AddBlog = () => {
         title: values.title,
         description: values.description,
         category: values.category,
-        image: "",
+        image: file,
       };
 
       mutate(data);

@@ -5,17 +5,16 @@ import {HiOutlineUpload,HiOutlineDownload} from "react-icons/hi";
 import {FaRegEdit} from "react-icons/fa"
 import Table from '../components/table/Table';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteCategory, getCategory } from '../services/categoryServices';
 import {FiEdit} from "react-icons/fi"
 import {AiTwotoneDelete} from "react-icons/ai"
 import { toast } from 'react-toastify';
 import { deleteBlog, getBlog } from '../services/blogServices';
-import { base_url } from '../utils/base_url';
+
 
 const Blog = () => {
 
     const navigate =  useNavigate()
-    const { data, isLoading, error } = useQuery('blog', getBlog);
+    const { data, isLoading, } = useQuery('blog', getBlog);
     const [show,setShow] = useState(false)
     const [deleteId,setDeleteId] = useState()
     const queryClient = useQueryClient()
@@ -42,8 +41,8 @@ const Blog = () => {
     const columns = [
         {
             name: 'Img',
-            selector: row => <img src={`${base_url}uploads/${row.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
-            with:"100px"
+            selector: row =>  <img src={row?.image} className={"w-[45px] h-[45px] rounded-md "} alt="category" />,
+            width:"100px"
         },
         {
             name: 'Title',
@@ -60,7 +59,8 @@ const Blog = () => {
 
         {
             name: 'Description',
-            selector: row => row.description?.slice(0,50),
+            selector: row => row.description,
+            width:"500px"
         },
 
 
@@ -69,7 +69,7 @@ const Blog = () => {
             cell:(row)=> <>
                 <div className=' flex flex-row items-center gap-2'>
                     {/* <button><HiOutlineViewfinderCircle /></button> */}
-                    {/* <button onClick={()=>navigate(`/update-category/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button> */}
+                    <button onClick={()=>navigate(`/update-blog/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button>
                     <button onClick={()=>getId(row._id)} className=' text-[20px] hover:text-red-500' ><AiTwotoneDelete /></button>
                 </div>
             </>, 
