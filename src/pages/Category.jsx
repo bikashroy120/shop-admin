@@ -54,7 +54,7 @@ const Category = () => {
     {
       name: "Img",
       selector: (row) => (
-        <img src={row?.image} className={"w-[45px] h-[45px] rounded-md "} />
+        <img src={row?.image} className={"w-[45px] h-[45px] rounded-md "} alt="category" />
       ),
     },
     {
