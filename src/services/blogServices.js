@@ -2,7 +2,7 @@ import { AxiosM,Axios } from "../utils/Axios"
 
 
 export const addBlog  = async(data)=>{
-    const res = await AxiosM.post("/blog",data)
+    const res = await Axios.post("/blog",data)
     return res
 }
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { HiOutlineUpload, HiOutlineDownload } from "react-icons/hi";
 import { FaRegEdit } from "react-icons/fa";
 import Table from "../components/table/Table";
 import { useMutation, useQuery, useQueryClient } from "react-query";
