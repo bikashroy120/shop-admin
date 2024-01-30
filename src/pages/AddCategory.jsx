@@ -15,14 +15,15 @@ let schema = yup.object().shape({
 });
 
 const AddCategory = () => {
+  const [uploadLoading,setuploadLoading] = useState(false)
   const [file, setFile] = useState();
   const navgate = useNavigate();
 
   const { mutate, isLoading } = useMutation(addCategory, {
     onSuccess: (data) => {
-      // Invalidate and refetch
       formik.resetForm();
       toast.success("Add Category success");
+      setFile("")
     },
     onError: () => {
       toast.error("error ");
@@ -31,6 +32,7 @@ const AddCategory = () => {
 
   const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
+    setuploadLoading(true)
     const image = e.target.files[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -41,6 +43,9 @@ const AddCategory = () => {
       .then((res) => res.json())
       .then((result) => {
         setFile(result.data?.url);
+        setuploadLoading(false)
+      }).catch((error)=>{
+        setuploadLoading(false)
       });
   };
 
@@ -136,12 +141,13 @@ const AddCategory = () => {
                   />
                 </div>
               </div>
+              {uploadLoading && <div><h2>Image Uploading...</h2></div>}
               {file && (
                 <div className="flex justify-center sm:justify-start ">
                   <div className="  w-[200px] h-auto p-1 bg-white shadow-md rounded-md mt-3 ">
                     <img
                       src={file}
-                      alt="category image"
+                      alt="category"
                       className="w-full h-full object-contain "
                     />
                   </div>

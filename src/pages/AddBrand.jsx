@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FiUploadCloud } from "react-icons/fi";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
-import { ColorRing } from "react-loader-spinner";
 import { addBrand } from "../services/barndServices";
 import PageTitle from "../ui/PageTitle";
 
