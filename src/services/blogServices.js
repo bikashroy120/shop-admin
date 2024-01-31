@@ -25,3 +25,19 @@ export const deleteBlog  = async(data)=>{
     const res = await Axios.delete(`/blog/${data}`)
     return res
 }
+
+
+export const addBanner  = async(data)=>{
+    const res = await Axios.post(`/banner`,data)
+    return res.data
+}
+
+export const getBanner  = async()=>{
+    const res = await Axios.get(`/banner/all-banner`)
+    return res.data
+}
+
+export const deleteBanner  = async(id)=>{
+    const res = await Axios.delete(`/banner/delete-banner/${id}`)
+    return res
+}

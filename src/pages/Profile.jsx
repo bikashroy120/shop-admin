@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useMutation, useQueryClient } from "react-query";
-import { ColorRing } from "react-loader-spinner";
-import { updateCoupon } from "../services/couponServices";
+import { useMutation} from "react-query";
 import { useSelector } from "react-redux";
 import { key } from "../utils/base_url";
 import { updateUser } from "../services/authServices";
 
 const Profile = () => {
-  const parems = useParams();
-  const itemID = parems.id;
-  const queryClient = useQueryClient();
-  const navgate = useNavigate();
   const [file, setFile] = useState();
   const [uploadLoading, setuploadLoading] = useState(false);
   const [fastname, setfastname] = useState("");
@@ -39,9 +32,6 @@ const Profile = () => {
     {
       onSuccess: (data) => {
         // Invalidate and refetch
-
-        console.log("f=================",data)
-
         toast.success("Profile update success");
         localStorage.setItem("Admin", JSON.stringify(data))
         localStorage.setItem("jwtToken", JSON.stringify(data.token))
