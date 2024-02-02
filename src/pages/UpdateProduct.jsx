@@ -71,7 +71,8 @@ const UpdateProduct = () => {
 
   // ------------------------remove image-----------------------------
   const handleRemoveImage = (index) => {
-    imageUrl.splice(index, 1);
+    const updateImage =  imageUrl?.filter((item)=>item!==index);
+    setImageUrl(updateImage)
   };
 
 
@@ -276,7 +277,7 @@ const UpdateProduct = () => {
                         alt="product"
                         className="w-full h-full object-cover"
                       />
-                        <button type="button" onClick={()=>handleRemoveImage(index)} className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"><MdDeleteForever /></button>
+                        <button type="button" onClick={()=>handleRemoveImage(file)} className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"><MdDeleteForever /></button>
                     </div>
                     ))
                   }

@@ -293,6 +293,9 @@ const AddProduct = () => {
                   </option>
                 );
               })}
+              <option className="" value="No Brand">
+                No Brand
+              </option>
             </select>
             <div
               className="error text-red-500"
