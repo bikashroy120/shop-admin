@@ -12,6 +12,11 @@ export const getUser  = async(searchQuery)=>{
     return res.data
 }
 
+export const getMe  = async()=>{
+    const res = await Axios.get(`/user/one`)
+    return res.data
+}
+
 export const getOrder  = async(searchQuery)=>{
     const res = await Axios.get(`/user/all-order?${searchQuery}`)
     return res.data

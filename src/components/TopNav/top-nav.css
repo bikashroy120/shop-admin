@@ -14,10 +14,10 @@
   position: fixed;
   width: 100%;
   top: 0;
-  left: 60px;
+  left: 70px;
   z-index: 999;
   background: var(--primary-color);
-  width: calc(100% - 60px);
+  width: calc(100% - 70px);
   height: 70px;
   line-height: 70px;
 }
