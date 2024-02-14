@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { HiOutlineUpload, HiOutlineDownload } from "react-icons/hi";
-import { FaRegEdit } from "react-icons/fa";
 import Table from "../components/table/Table";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { FiEdit } from "react-icons/fi";
-import { AiTwotoneDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { base_url } from "../utils/base_url";
 import { getOrder, updateOrder } from "../services/authServices";
 import Loader from "../components/UI/Loader";
 import { Pagination } from "antd";
