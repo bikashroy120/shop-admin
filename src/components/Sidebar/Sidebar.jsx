@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
@@ -8,26 +8,63 @@ import { AiOutlineUser } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { GrProductHunt } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import { useSelector } from "react-redux";
 
 const Sidebar = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.auth);
 
-  console.log("user ======= user", user);
+  const path = useLocation();
+  const isActive = (href) => {
+    return path.pathname.includes(href);
+  };
+
+  // const active = includes("/admin")
 
   const menus = [
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "User", link: "/user", icon: AiOutlineUser },
-    { name: "Category", link: "/category", icon: BiCategory },
-    { name: "Brand", link: "/brand", icon: TbBrandAdonisJs },
-    { name: "Product", link: "/product", icon: GrProductHunt },
-    { name: "Order", link: "/order", icon: TbReportAnalytics, margin: true },
-    { name: "Coupon", link: "/coupon", icon: TbLogicOr },
-    { name: "Blog", link: "/blog", icon: TbBrandBlogger },
-    { name: "Profile", link: "/profile", icon: CgProfile, margin: true },
-    { name: "Setting", link: "/settings", icon: RiSettings4Line },
+    {
+      name: "Dashboard",
+      link: "/",
+      active: "dashboard",
+      icon: MdOutlineDashboard,
+    },
+    { name: "User", link: "/user", active: "user", icon: AiOutlineUser },
+    {
+      name: "Category",
+      link: "/category",
+      active: "category",
+      icon: BiCategory,
+    },
+    { name: "Brand", link: "/brand", active: "brand", icon: TbBrandAdonisJs },
+    {
+      name: "Product",
+      link: "/product",
+      active: "product",
+      icon: GrProductHunt,
+    },
+    {
+      name: "Order",
+      link: "/order",
+      active: "order",
+      icon: TbReportAnalytics,
+      margin: true,
+    },
+    { name: "Coupon", link: "/coupon", active: "coupon", icon: TbLogicOr },
+    { name: "Blog", link: "/blog", active: "blog", icon: TbBrandBlogger },
+    {
+      name: "Profile",
+      link: "/profile",
+      active: "profile",
+      icon: CgProfile,
+      margin: true,
+    },
+    {
+      name: "Setting",
+      link: "/settings",
+      active: "settings",
+      icon: RiSettings4Line,
+    },
   ];
 
   return (
@@ -37,19 +74,42 @@ const Sidebar = ({ open, setOpen }) => {
           open ? "w-[250px]" : "w-[75px]"
         } duration-500 text-gray-100 px-2`}
       >
-        <div className="py-3 flex justify-end">
-          <HiMenuAlt3
-            size={26}
-            className="cursor-pointer"
-            onClick={() => setOpen(!open)}
-          />
+        <div className="py-3 flex justify-between items-center my-4">
+          <h2
+            style={{
+              transitionDelay: `${3}00ms`,
+            }}
+            className={`whitespace-pre duration-500 text-[30px] font-bold ${
+              !open && "opacity-0 -translate-x-28 overflow-hidden"
+            }`}
+          >
+            Bik Conner
+          </h2>
+
+          {(
+            <div>
+              <HiMenuAlt3
+                size={26}
+                className="cursor-pointer"
+                onClick={() => setOpen(!open)}
+              />
+            </div>
+          )}
         </div>
         {
-          <div className={`flex items-center gap-2 bg-gray-700 overflow-hidden py-2 rounded-md relative ${open ? "px-3" : "px-2"}`}>
+          <div
+            className={`flex items-center gap-2 bg-gray-700 overflow-hidden py-2 rounded-md relative ${
+              open ? "px-3" : "px-2"
+            }`}
+          >
             <img
               src={user?.image}
               alt="user"
-              className={` ${open ? "w-[50px] h-[50px] rounded-full" : "w-[40px] h-[40px] rounded-full"}`}
+              className={` ${
+                open
+                  ? "w-[50px] h-[50px] rounded-full"
+                  : "w-[40px] h-[40px] rounded-full"
+              }`}
             />
             <div className="">
               <h2
@@ -76,14 +136,16 @@ const Sidebar = ({ open, setOpen }) => {
             </div>
           </div>
         }
-        <div className="mt-5 flex flex-col gap-4 relative">
+        <div className="mt-5 flex flex-col gap-2 relative">
           {menus?.map((menu, i) => (
             <Link
               to={menu?.link}
               key={i}
               className={` ${
                 menu?.margin && "mt-5"
-              } group flex items-center text-sm  gap-3.5 font-medium py-2 duration-200 px-4 hover:bg-green-500 rounded-md`}
+              } group flex items-center text-sm  gap-3.5 font-medium py-2 duration-200 px-4 hover:bg-green-500 rounded-md ${
+                isActive(menu?.active) ? " bg-green-500" : ""
+              }`}
             >
               <div>{React.createElement(menu?.icon, { size: "25" })}</div>
               <h2

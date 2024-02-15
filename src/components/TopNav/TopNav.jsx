@@ -1,10 +1,18 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-import profileImg from "../../assets/images/profile-02.png";
+import { Link, useNavigate } from "react-router-dom";
 import "./top-nav.css";
+import { useSelector } from "react-redux";
 
-const TopNav = ({open}) => {
+const TopNav = ({ open }) => {
+  const { user } = useSelector((state) => state.auth);
+  const navegate = useNavigate()
+
+  const logoutFun = ()=>{
+    localStorage.clear()
+    navegate("/")
+  }
+
   return (
     <div className={open ? "top__nav duration-500" : "top__nav2 duration-500"}>
       <div className="top__nav-wrapper">
@@ -15,14 +23,21 @@ const TopNav = ({open}) => {
           </span>
         </div>
         <div className="top__nav-right">
-          <span className="notification">
+          {/* <span className="notification">
             <i class="ri-notification-3-line"></i>
             <span className="badge">1</span>
-          </span>
-          <div className="profile">
-            <Link to="/settings">
-              <img src={profileImg} alt="" />
+          </span> */}
+          <div className=" relative">
+            <Link to="/profile">
+              <img
+                src={user?.image}
+                alt=""
+                className="w-[50px] h-[50px] rounded-full"
+              />
             </Link>
+          </div>
+          <div className="h-full">
+            <span onClick={()=>logoutFun()} className=" bg-red-600 py-2 px-5 text-[18px] font-semibold text-white rounded-md cursor-pointer hover:bg-red-700">logout</span>
           </div>
         </div>
       </div>
