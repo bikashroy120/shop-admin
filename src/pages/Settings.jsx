@@ -5,39 +5,41 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { addBanner, deleteBanner, getBanner } from "../services/blogServices";
 import Loader from "../components/UI/Loader";
 import { toast } from "react-toastify";
+import { AiTwotoneDelete } from "react-icons/ai";
+import Table from "../components/table/Table";
 
 const Settings = () => {
   const [file, setFile] = useState();
   const [uploadLoading, setuploadLoading] = useState(false);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
-  const { data, isLoading:mainLoading } = useQuery(["banner"], getBanner);
+  const { data, isLoading: mainLoading } = useQuery(["banner"], getBanner);
 
-  const {mutate:deleteMutate} = useMutation(deleteBanner, {
+  const { mutate: deleteMutate } = useMutation(deleteBanner, {
     onSuccess: (data) => {
       // Invalidate and refetch
-      toast.success("Delete success")
-      queryClient.invalidateQueries(['banner'])
+      toast.success("Delete success");
+      queryClient.invalidateQueries(["banner"]);
     },
-    onError:()=>{
-      toast.error("error ")
-    }
-  })
+    onError: () => {
+      toast.error("error ");
+    },
+  });
 
-  const {mutate:addMutate,isLoading} = useMutation(addBanner, {
+  const { mutate: addMutate, isLoading } = useMutation(addBanner, {
     onSuccess: (data) => {
       // Invalidate and refetch
-      toast.success("banner add success")
-      setFile("")
-      queryClient.invalidateQueries(['banner'])
+      toast.success("banner add success");
+      setFile("");
+      queryClient.invalidateQueries(["banner"]);
     },
-    onError:(error)=>{
-      toast.error("error")
-      console.log(error)
-    }
-  })
+    onError: (error) => {
+      toast.error("error");
+      console.log(error);
+    },
+  });
 
-  console.log("banner data===",data)
+  console.log("banner data===", data);
 
   const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
@@ -56,17 +58,52 @@ const Settings = () => {
       })
       .catch((error) => {
         setuploadLoading(false);
-        console.log(error)
+        console.log(error);
       });
   };
 
   const handelSubmit = (type) => {
-      const data = {
-          image:"hello 25458745",
-          category:"hellow 225478785",
-      }
-      addMutate(data)
+    const data = {
+      image: "hello 25458745",
+      category: "hellow 225478785",
+    };
+    addMutate(data);
   };
+
+  const columns = [
+    {
+      name: "Id",
+      selector: (row) => row?._id,
+    },
+    {
+      name: "Category",
+      selector: (row) => row.category,
+    },
+    {
+      name: "Img",
+      selector: (row) => (
+        <img
+          src={row?.image}
+          className={"w-[45px] h-[45px] rounded-md "}
+          alt="category"
+        />
+      ),
+      width: "100px",
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <button
+          // onClick={() => getId(row._id)}
+          className=" text-[20px] hover:text-red-500"
+        >
+          <AiTwotoneDelete />
+        </button>
+      ),
+    },
+  ];
+
+  console.log("======", data);
 
   return (
     <div className="dasbord_laout text-white">
@@ -126,15 +163,19 @@ const Settings = () => {
 
                   <div className=" flex items-center justify-center gap-6">
                     <button
-                      onClick={()=>handelSubmit("main")}
+                      onClick={() => handelSubmit("main")}
                       className=" py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300"
                     >
                       {isLoading ? "Loading..." : " Add Banner"}
                     </button>
                   </div>
+
+                  <div className=" border mt-5">
+                      <Table data={data?.banner} columns={columns}/>
+                  </div>
                 </div>
                 <div className="w-full">
-                  <h2 className=" text-[20px] font-semibold">Sit Banner</h2>
+                  {/* <h2 className=" text-[20px] font-semibold">Sit Banner</h2> */}
                 </div>
               </div>
             </div>
