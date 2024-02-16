@@ -38,6 +38,7 @@ export const getBanner  = async()=>{
 }
 
 export const deleteBanner  = async(id)=>{
+    console.log(id)
     const res = await Axios.delete(`/banner/delete-banner/${id}`)
     return res
 }

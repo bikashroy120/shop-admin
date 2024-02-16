@@ -15,7 +15,7 @@ const Settings = () => {
 
   const { data, isLoading: mainLoading } = useQuery(["banner"], getBanner);
 
-  const { mutate: deleteMutate } = useMutation(deleteBanner, {
+  const { mutate:deleteMutate } = useMutation(deleteBanner, {
     onSuccess: (data) => {
       // Invalidate and refetch
       toast.success("Delete success");
@@ -64,8 +64,8 @@ const Settings = () => {
 
   const handelSubmit = (type) => {
     const data = {
-      image: "hello 25458745",
-      category: "hellow 225478785",
+      image:file,
+      category: "main",
     };
     addMutate(data);
   };
@@ -84,7 +84,7 @@ const Settings = () => {
       selector: (row) => (
         <img
           src={row?.image}
-          className={"w-[45px] h-[45px] rounded-md "}
+          className={"w-[155px] h-[45px] rounded-md "}
           alt="category"
         />
       ),
@@ -94,7 +94,7 @@ const Settings = () => {
       name: "Action",
       selector: (row) => (
         <button
-          // onClick={() => getId(row._id)}
+          onClick={() => deleteMutate(row._id)}
           className=" text-[20px] hover:text-red-500"
         >
           <AiTwotoneDelete />
