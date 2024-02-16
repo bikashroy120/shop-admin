@@ -63,15 +63,16 @@ const User = () => {
       name: "Img",
       selector: (row) => (
         <img
-          src={`${base_url}uploads/${row?.image}`}
+          src={`${row?.image}`}
           className={"w-[45px] h-[45px] rounded-md "}
+          alt="user"
         />
       ),
       width: "100px",
     },
     {
       name: "Name",
-      selector: (row) => row?.fastname + row?.lastname,
+      selector: (row) => row?.fastname + " " + row?.lastname,
     },
 
     {

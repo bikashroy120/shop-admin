@@ -8,6 +8,7 @@ import { getOrder, updateOrder } from "../services/authServices";
 import Loader from "../components/UI/Loader";
 import { Pagination } from "antd";
 import { useDebounce } from "use-debounce";
+import { FiZoomIn } from "react-icons/fi";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -21,8 +22,9 @@ const Order = () => {
 
   let itemsPerPage = 10;
 
-
-  const { data, isLoading } = useQuery(["order",searchQuery], ()=>getOrder(searchQuery));
+  const { data, isLoading } = useQuery(["order", searchQuery], () =>
+    getOrder(searchQuery)
+  );
 
   const update = useMutation(updateOrder, {
     onSuccess: (data) => {
@@ -35,7 +37,7 @@ const Order = () => {
     },
   });
 
-  const generateQuery = (searchValue,filter) => {
+  const generateQuery = (searchValue, filter) => {
     const queryParams = [];
 
     if (searchValue) {
@@ -44,19 +46,19 @@ const Order = () => {
     }
 
     if (filter !== "") {
-        queryParams.push(`orderStatus=${filter}`);
-        setPage(1);
-    }else{
-        queryParams.push(``);
-        setPage(1); 
+      queryParams.push(`orderStatus=${filter}`);
+      setPage(1);
+    } else {
+      queryParams.push(``);
+      setPage(1);
     }
     return queryParams.join("&");
   };
 
   useEffect(() => {
-    const query = generateQuery(searchValue,filter);
+    const query = generateQuery(searchValue, filter);
     setSearchQuery(`${query}&page=${page}&limit=${itemsPerPage}`);
-  }, [searchValue, page,filter,itemsPerPage]);
+  }, [searchValue, page, filter, itemsPerPage]);
 
   const handelChance = (e, id) => {
     const data = {
@@ -73,7 +75,8 @@ const Order = () => {
       selector: (row) => (
         <img
           src={`${row?.orderby.image}`}
-          className={"w-[45px] h-[45px] rounded-md "} alt="user"
+          className={"w-[45px] h-[45px] rounded-md "}
+          alt="user"
         />
       ),
       width: "100px",
@@ -123,33 +126,38 @@ const Order = () => {
       cell: (row) => (
         <>
           <div className=" flex flex-row items-center gap-2">
-              <select
-                onChange={(e) => handelChance(e, row?._id)}
-                value={row.orderStatus}
-                className=" bg-primary border border-white py-1 rounded-md px-1"
-              >
-                <option className="" value="Pending">
-                  Pending
-                </option>
-                <option className="" value="Processing">
-                  Processing
-                </option>
-                <option className="" value="Complete">
-                  Complete
-                </option>
-              </select>
+            <select
+              onChange={(e) => handelChance(e, row?._id)}
+              value={row.orderStatus}
+              className=" bg-primary border border-white py-1 rounded-md px-1"
+            >
+              <option className="" value="Pending">
+                Pending
+              </option>
+              <option className="" value="Processing">
+                Processing
+              </option>
+              <option className="" value="Complete">
+                Complete
+              </option>
+            </select>
           </div>
         </>
       ),
-      width:"140px"
+      width: "140px",
     },
     {
-        name: "Invoice",
-        selector: (row) => (
-             <button></button>
-        ),
-        width:"120px"
-      },
+      name: "Invoice",
+      selector: (row) => (
+        <div className="w-[80px] flex items-center justify-center">
+          {" "}
+          <button onClick={()=>navigate(`/order/${row._id}`)} className=" text-[25px] w-full flex items-center justify-center">
+            <FiZoomIn size={23} />
+          </button>
+        </div>
+      ),
+      width: "120px",
+    },
   ];
 
   const PagenationChange = (page, pageSiz) => {
@@ -215,7 +223,6 @@ const Order = () => {
             )}
           </div>
         </div>
-
       </div>
 
       {show ? (

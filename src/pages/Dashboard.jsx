@@ -4,12 +4,8 @@ import SingleCard from "../components/reuseable/SingleCard";
 
 import MileChart from "../charts/MileChart";
 import CarStatsChart from "../charts/CarStatsChart";
-import RecommendCarCard from "../components/UI/RecommendCarCard";
-
-import recommendCarsData from "../assets/dummy-data/recommendCars";
 import { useQuery } from "react-query";
-import { getDashbordData, getOrder } from "../services/authServices";
-import { toast } from "react-toastify";
+import { getDashbordData } from "../services/authServices";
 import Table from "../components/table/Table";
 
 const Dashboard = () => {
@@ -48,15 +44,15 @@ const Dashboard = () => {
     {
       name: "Order Status",
       selector: (row) => (
-        <span
-          className={`p-1 rounded-2xl ${
+        <p
+          className={`py-1 px-3 rounded-full ${
             row?.orderStatus === "Pending" && "bg-red-500"
           } ${row?.orderStatus === "Processing" && "bg-yellow-500"} ${
             row?.orderStatus === "Complete" && "bg-green-500"
           }`}
         >
           {row?.orderStatus}
-        </span>
+        </p>
       ),
     },
 
@@ -126,7 +122,7 @@ const Dashboard = () => {
               <h2>Lodding...</h2>
             ) : (
               <div className=" mt-2">
-                <Table columns={columns} data={data.order} />
+                <Table columns={columns} data={data?.order?.slice(0,7)} />
               </div>
             )}
           </div>

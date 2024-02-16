@@ -22,6 +22,7 @@ import Profile from "../pages/Profile";
 import User from "../pages/User";
 import Order from "../pages/Order";
 import UpdateBlog from "../pages/UpdateBlog";
+import Invoice from "../pages/Invoice";
 
 const Router = () => {
   return (
@@ -42,6 +43,7 @@ const Router = () => {
       <Route path="/update-product/:id" element={<UpdateProduct />} />
       <Route path="/sell-car" element={<SellCar />} />
       <Route path="/order" element={<Order />} />
+      <Route path="/order/:id" element={<Invoice />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/add-blog" element={<AddBlog />} />
       <Route path="/update-blog/:id" element={<UpdateBlog />} />

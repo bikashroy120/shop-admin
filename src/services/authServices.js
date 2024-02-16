@@ -36,3 +36,8 @@ export const getDashbordData  = async()=>{
     const res = await Axios.get("/user/dashborddata")
     return res.data
 }
+
+export const getSingleOrder= async(id)=>{
+    const res = await Axios.get(`/user/order/${id}`)
+    return res.data
+}
