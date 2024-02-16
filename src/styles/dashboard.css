@@ -62,9 +62,9 @@
 .stats {
   background: var(--primary-color);
   width: 100%;
-  padding: 30px;
+  padding: 20px;
   border-radius: 5px;
-  height: 320px;
+  height: 420px;
   padding-bottom: 50px;
 }
 

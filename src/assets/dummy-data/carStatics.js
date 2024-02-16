@@ -1,38 +1,33 @@
 const carStaticsData = [
   {
     name: "Sat",
-    week: 4000,
-    prevWeek: 2400,
+    order: 12,
   },
   {
     name: "Sun",
-    week: 3000,
-    prevWeek: 1398,
+    order: 7,
   },
   {
     name: "Mon",
     week: 2000,
-    prevWeek: 9800,
+    order: 13,
   },
   {
     name: "Tue",
-    week: 2780,
-    prevWeek: 3908,
+    order: 10,
   },
   {
     name: "Wed",
     week: 1890,
-    prevWeek: 4800,
+    order: 15,
   },
   {
     name: "Thu",
-    week: 2390,
-    prevWeek: 3800,
+    order: 8,
   },
   {
     name: "Fri",
-    week: 3490,
-    prevWeek: 4300,
+    order: 7,
   },
 ];
 

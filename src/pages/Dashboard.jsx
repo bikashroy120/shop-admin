@@ -11,17 +11,15 @@ import { useQuery } from "react-query";
 import { getDashbordData, getOrder } from "../services/authServices";
 import { toast } from "react-toastify";
 import Table from "../components/table/Table";
-import { base_url } from "../utils/base_url";
-
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useQuery('order', getDashbordData);
+  const { data, isLoading, } = useQuery('order', getDashbordData);
 
 
   const columns = [
     {
         name: 'Img',
-        selector: row => <img src={`${base_url  }uploads/${row?.orderby.image}`} className={"w-[45px] h-[45px] rounded-full "}/>,
+        selector: row => <img src={`${row?.orderby.image}`} alt="order" className={"w-[45px] h-[45px] rounded-md "}/>,
         width:"100px"
     },
     {
@@ -65,7 +63,7 @@ console.log(data)
           <SingleCard title={"Complete Order"} totalNumber={data?.CompleteOrder} icon={"ri-check-line"} />
         </div>
 
-        <div className="w-full grid lg:grid-cols-2 md:grid-cols-1 gap-5 mt-8 ">
+        <div className=" flex items-center justify-between gap-5 mt-8 ">
           <div className="stats">
             <h3 className="stats__title">Miles Statistics</h3>
             <MileChart />
