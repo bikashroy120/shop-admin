@@ -1,31 +1,31 @@
 const mileStatics = [
   {
     name: "Sat",
-    mileStats: 6000,
+    user: 6,
   },
   {
     name: "Sun",
-    mileStats: 5000,
+    user: 5,
   },
   {
     name: "Mon",
-    mileStats: 7000,
+    user: 7,
   },
   {
     name: "Tue",
-    mileStats: 5780,
+    user: 5,
   },
   {
     name: "Wed",
-    mileStats: 4890,
+    user: 4,
   },
   {
     name: "Thu",
-    mileStats: 6390,
+    user: 6,
   },
   {
     name: "Fri",
-    mileStats: 5490,
+    user: 5,
   },
 ];
 

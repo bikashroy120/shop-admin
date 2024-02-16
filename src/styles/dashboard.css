@@ -1,6 +1,6 @@
 .dashboard {
   margin-top: 100px;
-  padding: 0px 30px;
+  padding: 0px 40px;
   padding-bottom: 50px;
 }
 
@@ -62,10 +62,7 @@
 .stats {
   background: var(--primary-color);
   width: 100%;
-  padding: 20px;
   border-radius: 5px;
-  height: 420px;
-  padding-bottom: 50px;
 }
 
 .tooltip__style {
