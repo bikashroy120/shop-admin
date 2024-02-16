@@ -6,7 +6,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { deleteProduct } from "../services/productServices";
-import { base_url } from "../utils/base_url";
 import { getUser } from "../services/authServices";
 import Loader from "../components/UI/Loader";
 import { useDebounce } from "use-debounce";
@@ -63,7 +62,7 @@ const User = () => {
       name: "Img",
       selector: (row) => (
         <img
-          src={`${row?.image}`}
+          src={`${row?.image? row?.image:"/user.jpg"}`}
           className={"w-[45px] h-[45px] rounded-md "}
           alt="user"
         />

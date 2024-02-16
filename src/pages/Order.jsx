@@ -74,7 +74,7 @@ const Order = () => {
       name: "Img",
       selector: (row) => (
         <img
-          src={`${row?.orderby.image}`}
+          src={`${row?.orderby.image ? row?.orderby.image:"/user.jpg"}`}
           className={"w-[45px] h-[45px] rounded-md "}
           alt="user"
         />

@@ -15,9 +15,12 @@ const Profile = () => {
 
   const { user } = useSelector((state) => state.auth);
 
+
+  console.log(user)
+
   useEffect(() => {
     if (user) {
-      setfastname(user?.fastname);
+      setfastname(user?.firstname);
       setlastname(user?.lastname);
       setmobilet(user?.mobile);
       setcityt(user?.city);
@@ -63,7 +66,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      fastname,
+      firstname:fastname,
       lastname,
       mobile,
       city,
