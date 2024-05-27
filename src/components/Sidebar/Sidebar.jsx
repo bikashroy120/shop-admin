@@ -70,11 +70,11 @@ const Sidebar = ({ open, setOpen }) => {
   return (
     <>
       <div
-        className={`sidebar min-h-screen ${
+        className={`sidebar min-h-screen border-r shadow-sm overflow-y-auto overflow-x-hidden ${
           open ? "w-[250px]" : "w-[75px]"
-        } duration-500 text-gray-100 px-2`}
+        } duration-500 text-gray-800 px-2`}
       >
-        <div className="py-3 flex justify-between items-center my-4">
+        <div className="py-3 flex justify-center border-b w-full items-center my-4">
           <h2
             style={{
               transitionDelay: `${3}00ms`,
@@ -83,20 +83,20 @@ const Sidebar = ({ open, setOpen }) => {
               !open && "opacity-0 -translate-x-28 overflow-hidden"
             }`}
           >
-            Bik Conner
+            BikConner
           </h2>
 
-          {(
-            <div>
-              <HiMenuAlt3
-                size={26}
-                className="cursor-pointer"
-                onClick={() => setOpen(!open)}
-              />
-            </div>
+          {!open && (
+            <h2
+              className={` opacity-1 duration-500 text-[30px] translate-x-28 font-bold ${
+                !open && "opacity-1 -translate-x-2  whitespace-pre"
+              }`}
+            >
+              Bik
+            </h2>
           )}
         </div>
-        {
+        {/* {
           <div
             className={`flex items-center gap-2 bg-gray-700 overflow-hidden py-2 rounded-md relative ${
               open ? "px-3" : "px-2"
@@ -135,7 +135,7 @@ const Sidebar = ({ open, setOpen }) => {
               </h2>
             </div>
           </div>
-        }
+        } */}
         <div className="mt-5 flex flex-col gap-2 relative">
           {menus?.map((menu, i) => (
             <Link
@@ -144,7 +144,7 @@ const Sidebar = ({ open, setOpen }) => {
               className={` ${
                 menu?.margin && "mt-5"
               } group flex items-center text-sm  gap-3.5 font-medium py-2 duration-200 px-4 hover:bg-green-500 rounded-md ${
-                isActive(menu?.active) ? " bg-green-500" : ""
+                isActive(menu?.active) ? " bg-green-500 text" : ""
               }`}
             >
               <div>{React.createElement(menu?.icon, { size: "25" })}</div>
@@ -152,7 +152,7 @@ const Sidebar = ({ open, setOpen }) => {
                 style={{
                   transitionDelay: `${i + 3}00ms`,
                 }}
-                className={`whitespace-pre duration-500 text-[18px] ${
+                className={`whitespace-pre duration-500 font-semibold text-[18px] ${
                   !open && "opacity-0 translate-x-28 overflow-hidden"
                 }`}
               >

@@ -2,27 +2,19 @@ import "./App.css";
 import Layout from "./components/Layout/Layout";
 import { useSelector } from "react-redux";
 import Login from "./pages/Login";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+  const queryClient = new QueryClient();
 
-  const {user} = useSelector((state)=>state.auth)
-  const queryClient = new QueryClient()
-
-  
   return (
     <>
-    <QueryClientProvider client={queryClient}>
-        {
-          user ? (<Layout/>) : (<Login />)
-         }
-
-    </QueryClientProvider>
-    <ToastContainer
+      <QueryClientProvider client={queryClient}>
+        {user ? <Layout /> : <Login />}
+      </QueryClientProvider>
+      <ToastContainer
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -33,7 +25,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
-        />
+      />
     </>
   );
 }

@@ -23,7 +23,17 @@
 
 body {
   font-family: "DM Sans", sans-serif;
-  background: var(--body-bg);
+  background: rgb(249 250 251 /1);
+}
+
+/* ----- -----------------style for scrollbar----------------*/
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(172, 172, 194);
+  border-radius: 10px;
 }
 
 ul {
@@ -36,7 +46,7 @@ a {
 }
 
 .main__layout {
-  margin-left: 230px;
+  margin-left: 240px;
 }
 
 .main__layout2 {
@@ -47,7 +57,7 @@ img {
   width: 100%;
 }
 
-.dasbord_laout{
+.dasbord_laout {
   margin-top: 100px;
   margin-left: 20px;
   padding: 0px 30px;
@@ -79,24 +89,20 @@ img {
   }
 }
 
-
 @media screen and (max-width: 880px) {
   .main__layout2 {
     margin-left: 45px;
   }
-  .dasbord_laout{
+  .dasbord_laout {
     padding: 0px 10px;
-
   }
 }
-
 
 /* --------------------ant table pagination---------------- */
 
 .ant-pagination-next {
   margin-right: 22px !important;
 }
-
 
 /* .ant-pagination-prev {
   border-radius: 8px !important;
@@ -127,10 +133,8 @@ img {
 
 } */
 
-
 .ant-pagination-item a {
   color: #fff !important;
-
 }
 
 .ant-pagination-item-active {
@@ -143,5 +147,4 @@ img {
   color: #fff !important;
   font-size: 13px !important;
   font-weight: bold !important;
-
 }
