@@ -10,6 +10,11 @@ import { getUser } from "../services/authServices";
 import Loader from "../components/UI/Loader";
 import { useDebounce } from "use-debounce";
 import { Pagination } from "antd";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
+import { FaSearchPlus } from "react-icons/fa";
+import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 const User = () => {
   const [show, setShow] = useState(false);
@@ -18,9 +23,9 @@ const User = () => {
   const [search, setSearch] = useState("");
   const [searchValue] = useDebounce(search, 1000);
   const [searchQuery, setSearchQuery] = useState("");
-  const [page,setPage] = useState(1)
- 
-
+  const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+  
   let itemsPerPage = 10;
 
   const { data, isLoading } = useQuery(["user", searchQuery], () =>
@@ -46,7 +51,7 @@ const User = () => {
 
     if (search) {
       queryParams.push(`search=${searchValue}`);
-      setPage(1)
+      setPage(1);
     }
 
     return queryParams.join("&");
@@ -55,14 +60,14 @@ const User = () => {
   useEffect(() => {
     const query = generateQuery();
     setSearchQuery(`${query}&page=${page}&limit=${itemsPerPage}`);
-  }, [searchValue,page]);
+  }, [searchValue, page]);
 
   const columns = [
     {
       name: "Img",
       selector: (row) => (
         <img
-          src={`${row?.image? row?.image:"/user.jpg"}`}
+          src={`${row?.image ? row?.image : "/user.jpg"}`}
           className={"w-[45px] h-[45px] rounded-md "}
           alt="user"
         />
@@ -91,21 +96,26 @@ const User = () => {
       name: "Action",
       cell: (row) => (
         <>
-          <div className=" flex flex-row items-center gap-2">
-            {/* <button><HiOutlineViewfinderCircle /></button> */}
-            {/* <button onClick={()=>navigate(`/update-product/${row._id}`)} className=' text-[20px] hover:text-green-500' ><FiEdit /></button> */}
+          <div className=" flex flex-row items-center gap-4">
+            <button onClick={() => navigate(`/update-product/${row._id}`)} className=" text-[22px] hover:text-green-500"><FaSearchPlus /></button>
+            <button
+              onClick={() => navigate(`/user/${row._id}`)}
+              className=" text-[23px] hover:text-green-500"
+            >
+              <FiEdit />
+            </button>
             <button
               onClick={() =>
                 toast.error("দুঃখিত ইউজার পেইজের কাজ এখনো শেষ হয়নি")
               }
-              className=" text-[20px] hover:text-red-500"
+              className=" text-[28px] hover:text-red-500"
             >
-              <AiTwotoneDelete />
+              <RiDeleteBinLine />
             </button>
           </div>
         </>
       ),
-      width: "130px",
+      width: "150px",
     },
   ];
 
@@ -114,49 +124,57 @@ const User = () => {
     setDeleteId(id);
   };
 
-
-  const PagenationChange = (page, pageSiz)=>{
-    setPage(page)
-  }
+  const PagenationChange = (page, pageSiz) => {
+    setPage(page);
+  };
 
   // add-category
   return (
-    <div className="dasbord_laout text-white bgpr">
+    <div className="dasbord_laout bgpr">
       <div>
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-[23px] font-semibold">All User</h2>
-        </div>
-
-        <div className=" bg-primary text-white py-2 mt-8 rounded-lg">
-          <div className="md:w-[50%] w-full pt-4 px-5">
-            <input
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              className=" w-full bg-transparent border border-[#808191] outline-none py-3 px-5 rounded-lg"
-              placeholder="Search By Category Name"
-            />
-          </div>
-
-          {isLoading ? (
-            <>
-              <Loader />
-            </>
-          ) : (
-            <div className=" mt-5 border-b border-b-gray-500">
-              <Table columns={columns} data={data?.user} />
+        <div className=" py-2 mt-8 rounded-lg">
+          <div className=" flex items-center gap-4 bg-white rounded-md shadow-sm py-4 mb-5 px-5 justify-between">
+            <div className=" w-full">
+              <h2 className="text-[23px] font-semibold">All User</h2>
             </div>
-          )}
-          <div className="flex items-center justify-end py-2 pt-3 px-5">
+            <div className="w-full">
+              <input
+                type="text"
+                onChange={(e) => setSearch(e.target.value)}
+                className=" w-full bg-transparent border border-gray-200 outline-none py-3 px-5 rounded-lg"
+                placeholder="Search By user Name Phone Email"
+              />
+            </div>
+          </div>
+          <div className=" border rounded-lg bg-white overflow-hidden shadow-sm">
+            {isLoading ? (
+              <>
+                <Loader />
+              </>
+            ) : (
+              <div className=" border-b border-b-gray-200">
+                <Table columns={columns} data={data?.user} />
+              </div>
+            )}
+
             {isLoading ? (
               <> </>
             ) : (
-              <Pagination
-                defaultCurrent={page}
-                total={data?.item}
-                pageSize={itemsPerPage}
-                onChange={PagenationChange}
-                showSizeChanger={false}
-              />
+              <div className="flex items-center justify-between py-5 px-5">
+                <div>
+                  <h2>
+                    SHOWING {page === 1 ? page : page * itemsPerPage - 100} -{" "}
+                    {page * data?.user.length} OF {data?.item}
+                  </h2>
+                </div>
+                <Pagination
+                  defaultCurrent={page}
+                  total={data?.item}
+                  pageSize={itemsPerPage}
+                  onChange={PagenationChange}
+                  showSizeChanger={false}
+                />
+              </div>
             )}
           </div>
         </div>

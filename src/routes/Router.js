@@ -23,6 +23,7 @@ import User from "../pages/User";
 import Order from "../pages/Order";
 import UpdateBlog from "../pages/UpdateBlog";
 import Invoice from "../pages/Invoice";
+import UserEdit from "../pages/UserEdit";
 
 const Router = () => {
   return (
@@ -52,6 +53,7 @@ const Router = () => {
       <Route path="/update-coupon/:id" element={<UpdateCoupon />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/user" element={<User />} />
+      <Route path="/user/:id" element={<UserEdit />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );

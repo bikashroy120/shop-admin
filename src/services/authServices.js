@@ -17,6 +17,11 @@ export const getMe  = async()=>{
     return res.data
 }
 
+export const getById  = async(id)=>{
+    const res = await Axios.get(`/user/${id}`)
+    return res.data
+}
+
 export const getOrder  = async(searchQuery)=>{
     const res = await Axios.get(`/user/all-order?${searchQuery}`)
     return res.data
@@ -24,6 +29,11 @@ export const getOrder  = async(searchQuery)=>{
 
 export const updateUser  = async(data)=>{
     const res = await Axios.put(`/user/update/`,data)
+    return res.data
+}
+
+export const updateUserAdmin  = async(data,id)=>{
+    const res = await Axios.put(`/user/update/${id}`,data)
     return res.data
 }
 
