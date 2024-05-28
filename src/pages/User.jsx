@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Table from "../components/table/Table";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { AiTwotoneDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { deleteProduct } from "../services/productServices";
 import { getUser } from "../services/authServices";
@@ -14,7 +13,6 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
 import { FaSearchPlus } from "react-icons/fa";
-import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 
 const User = () => {
   const [show, setShow] = useState(false);

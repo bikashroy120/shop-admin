@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { singalCategory, updateCategory } from "../services/categoryServices";
 import PageTitle from "../ui/PageTitle";
 import Loader from "../components/UI/Loader";
 import { key } from "../utils/base_url";

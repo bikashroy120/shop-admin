@@ -12,7 +12,7 @@ export const updateCategory  = async(data,itemID)=>{
 }
 
 export const getCategory  = async(searchQuery)=>{
-    const res = await Axios.get(`/product-category?${searchQuery}`)
+    const res = await Axios.get(`/product-category/admin`)
     return res.data
 }
 
