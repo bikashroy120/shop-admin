@@ -116,7 +116,7 @@ img {
 } */
 
 .ant-pagination-item-link {
-  color: #fff !important;
+  color: gray !important;
 }
 
 .ant-pagination-item-link:disabled {
@@ -138,7 +138,7 @@ img {
 } */
 
 .ant-pagination-item a {
-  color: #fff !important;
+  color: gray !important;
 }
 
 .ant-pagination-item-active {

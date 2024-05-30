@@ -88,17 +88,17 @@ const Category = () => {
       name: "Action",
       cell: (row) => (
         <>
-          <div className=" flex flex-row items-center gap-4">
+          <div className=" flex flex-row items-center gap-3">
             {/* <button><HiOutlineViewfinderCircle /></button> */}
             <button
               onClick={() => navigate(`/update-category/${row._id}`)}
-              className=" text-[23px] hover:text-green-500"
+              className=" text-[22px] hover:text-green-500"
             >
               <FiEdit />
             </button>
             <button
               onClick={() => getId(row._id)}
-              className=" text-[28px] hover:text-red-500"
+              className=" text-[25px] hover:text-red-500"
             >
               <RiDeleteBinLine />
             </button>
@@ -129,7 +129,7 @@ const Category = () => {
         </div>
 
         <div className=" py-2 mt-4 rounded-lg">
-          <div className=" flex items-center bg-white shadow-sm py-4 px-5 rounded-lg mb-5 justify-between gap-2">
+          <div className=" flex items-center bg-white shadow-sm py-3 px-5 rounded-lg mb-5 justify-between gap-2">
             <div className="md:w-[50%] w-full">
               <input
                 type="text"
