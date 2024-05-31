@@ -24,6 +24,7 @@ import Order from "../pages/Order";
 import UpdateBlog from "../pages/UpdateBlog";
 import Invoice from "../pages/Invoice";
 import UserEdit from "../pages/UserEdit";
+import ViewProduct from "../pages/ViewProduct";
 
 const Router = () => {
   return (
@@ -42,6 +43,7 @@ const Router = () => {
       <Route path="/product" element={<Product />} />
       <Route path="/add-product" element={<AddProduct />} />
       <Route path="/update-product/:id" element={<UpdateProduct />} />
+      <Route path="/view-product/:id" element={<ViewProduct />} />
       <Route path="/sell-car" element={<SellCar />} />
       <Route path="/order" element={<Order />} />
       <Route path="/order/:id" element={<Invoice />} />

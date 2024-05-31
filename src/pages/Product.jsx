@@ -134,7 +134,7 @@ const Product = () => {
       selector: (row) => (
         <div className="h-[30px] w-full flex items-center justify-center">
           <button
-            onClick={() => navigate(`/update-product/${row._id}`)}
+            onClick={() => navigate(`/view-product/${row._id}`)}
             className=" text-[20px] hover:text-green-500"
           >
             <FaSearchPlus />
@@ -203,7 +203,7 @@ const Product = () => {
               type="text"
               onChange={(e) => setSearch(e.target.value)}
               className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
-              placeholder="Search By Category Name"
+              placeholder="Search By Name Category Brand"
             />
             <select
               className="w-full bg-inputBg text-gray-700 border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
