@@ -16,6 +16,11 @@ export const getCategory  = async(searchQuery)=>{
     return res.data
 }
 
+export const getCategory2  = async(searchQuery)=>{
+    const res = await Axios.get(`/product-category`)
+    return res.data
+}
+
 export const singalCategory  = async(id)=>{
     const res = await Axios.get(`/product-category/${id}`)
     return res.data

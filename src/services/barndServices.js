@@ -16,6 +16,11 @@ export const getBrand  = async(searchQuery)=>{
     return res.data
 }
 
+export const getBrand2  = async(searchQuery)=>{
+    const res = await Axios.get(`/brand?${searchQuery}`)
+    return res.data
+}
+
 export const singalBrand  = async(id)=>{
     const res = await Axios.get(`/brand/${id}`)
     return res.data
