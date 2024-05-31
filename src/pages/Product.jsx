@@ -242,7 +242,7 @@ const Product = () => {
                 setCategory("");
                 setBrand("");
               }}
-              className="py-[10px] px-5 bg-yellow-500 text-white text-[18px] font-bold rounded-lg"
+              className="py-[15px] px-5 bg-yellow-500 text-white text-[18px] font-bold rounded-lg"
             >
               Clear
             </button>
