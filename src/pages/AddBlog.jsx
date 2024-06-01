@@ -23,7 +23,7 @@ const AddBlog = () => {
     onSuccess: (data) => {
       // Invalidate and refetch
       formik.resetForm();
-      setFile("")
+      setFile("");
       toast.success("Add Category success");
     },
     onError: () => {
@@ -71,21 +71,21 @@ const AddBlog = () => {
   });
 
   return (
-    <div className="dasbord_laout text-white">
+    <div className="dasbord_laout">
       <PageTitle title={"Add Blog"} />
 
       <form
         onSubmit={formik.handleSubmit}
-        className=" bg-primary py-8 rounded-lg px-5"
+        className=" bg-white shadow-sm py-8 rounded-lg px-5"
       >
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Name
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Blog Title"
               onChange={formik.handleChange("title")}
               onBlur={formik.handleBlur("title")}
@@ -100,13 +100,13 @@ const AddBlog = () => {
           </div>
         </div>
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Category
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Blog Category"
               onChange={formik.handleChange("category")}
               onBlur={formik.handleBlur("category")}
@@ -121,7 +121,7 @@ const AddBlog = () => {
           </div>
         </div>
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Description
           </label>
           <div className="w-full md:w-[70%]">
@@ -130,7 +130,7 @@ const AddBlog = () => {
               id=""
               cols="10"
               rows="10"
-              className=" w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Description"
               onChange={formik.handleChange("description")}
               onBlur={formik.handleBlur("description")}
@@ -146,7 +146,7 @@ const AddBlog = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Image
           </label>
           <div className="md:w-[70%] w-full">
@@ -185,19 +185,22 @@ const AddBlog = () => {
           </div>
         </div>
 
-        <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
-          <button
-            onClick={() => navgate("/blog")}
-            className=" py-3 px-10 rounded-lg w-full md:w-auto bg-gray-600 text-white "
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className=" py-3 px-10 rounded-lg w-full md:w-auto bg-green-600 hover:bg-green-700 duration-300"
-          >
-            {isLoading ? "Loading..." : "Add Category"}
-          </button>
+        <div className="flex items-center ">
+          <div className="w-full md:w-[30%]"></div>
+          <div className=" md:w-[70%] w-full flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+            <button
+              onClick={() => navgate("/blog")}
+              className=" py-3 px-10 rounded-lg w-full hover:bg-red-500 bg-gray-600 text-white "
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" py-3 px-10 rounded-lg w-full bg-primary text-white hover:bg-green-700 duration-300"
+            >
+              {isLoading ? "Loading..." : "Add Category"}
+            </button>
+          </div>
         </div>
       </form>
     </div>
