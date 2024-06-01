@@ -7,6 +7,8 @@ import Loader from "../components/UI/Loader";
 import { toast } from "react-toastify";
 import { AiTwotoneDelete } from "react-icons/ai";
 import Table from "../components/table/Table";
+import { RiDeleteBinLine } from "react-icons/ri";
+import SiteBammer from "../components/banner/SiteBammer";
 
 const Settings = () => {
   const [file, setFile] = useState();
@@ -15,7 +17,7 @@ const Settings = () => {
 
   const { data, isLoading: mainLoading } = useQuery(["banner"], getBanner);
 
-  const { mutate:deleteMutate } = useMutation(deleteBanner, {
+  const { mutate: deleteMutate } = useMutation(deleteBanner, {
     onSuccess: (data) => {
       // Invalidate and refetch
       toast.success("Delete success");
@@ -64,49 +66,16 @@ const Settings = () => {
 
   const handelSubmit = (type) => {
     const data = {
-      image:file,
-      category: "main",
+      image: file,
+      category: type,
     };
     addMutate(data);
   };
 
-  const columns = [
-    {
-      name: "Id",
-      selector: (row) => row?._id,
-    },
-    {
-      name: "Category",
-      selector: (row) => row.category,
-    },
-    {
-      name: "Img",
-      selector: (row) => (
-        <img
-          src={row?.image}
-          className={"w-[155px] h-[45px] rounded-md "}
-          alt="category"
-        />
-      ),
-      width: "100px",
-    },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button
-          onClick={() => deleteMutate(row._id)}
-          className=" text-[20px] hover:text-red-500"
-        >
-          <AiTwotoneDelete />
-        </button>
-      ),
-    },
-  ];
-
   console.log("======", data);
 
   return (
-    <div className="dasbord_laout text-white">
+    <div className="dasbord_laout">
       <div>
         {mainLoading ? (
           <>
@@ -115,15 +84,18 @@ const Settings = () => {
         ) : (
           <>
             {" "}
-            <div className=" bg-primary py-8 rounded-lg px-5">
-              <div className="flex items-center justify-between gap-7">
+            <div className=" bg-white shadow-sm py-8 rounded-lg px-10">
+              <div className="">
                 <div className="w-full">
                   <h2 className=" text-[20px] font-semibold">Main Banner</h2>
-                  <div className=" flex items-start flex-col justify-between my-10">
-                    <label className=" text-[18px] font-medium" htmlFor="">
+                  <div className=" flex items-start justify-between my-10">
+                    <label
+                      className=" md:w-[30%] w-full text-[18px] text-gray-700 font-medium"
+                      htmlFor=""
+                    >
                       Banner Image
                     </label>
-                    <div className=" w-full">
+                    <div className=" md:w-[70%] w-full">
                       <div className="w-full my-3">
                         <div className="md:flex items-center gap-2">
                           {/* <p className="text-info text-lg font-bold">Icon:</p> */}
@@ -160,24 +132,54 @@ const Settings = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div className=" flex items-center justify-center gap-6">
-                    <button
-                      onClick={() => handelSubmit("main")}
-                      className=" py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300"
+                  <div className=" flex items-center md:flex-row flex-col ">
+                    <div className="md:w-[30%] w-full"></div>
+                    <div className=" md:w-[70%] w-full flex items-center justify-center gap-6">
+                      <button
+                        onClick={() => handelSubmit("main")}
+                        className=" py-3 px-10 w-full text-white rounded-lg bg-primary hover:bg-green-700 duration-300"
+                      >
+                        {isLoading ? "Loading..." : " Add Banner"}
+                      </button>
+                    </div>
+                  </div>
+                  <div className=" flex items-start mt-10 md:flex-row flex-col">
+                    <label
+                      className=" md:w-[30%] w-full text-[18px] text-gray-700 font-medium"
+                      htmlFor=""
                     >
-                      {isLoading ? "Loading..." : " Add Banner"}
-                    </button>
+                      Banner Image List
+                    </label>
+                    <div className=" w-full md:w-[70%]">
+                      <div className=" grid md:grid-cols-3 gap-5 grid-cols-2 ">
+                        {data?.banner
+                          ?.filter((item) => item.category === "main")
+                          .map((ban, index) => (
+                            <div className=" w-full h-full relative group rounded-xl overflow-hidden">
+                              <img
+                                src={ban.image}
+                                alt=""
+                                className=" w-full h-full object-cover"
+                              />
+                              <div className=" bg-black/40 flex items-center opacity-0 group-hover:opacity-100 duration-300  justify-center w-full h-full absolute top-0 left-0 ">
+                                <button
+                                  onClick={() => deleteMutate(ban?._id)}
+                                  className=" text-[25px] text-white"
+                                >
+                                  {" "}
+                                  <RiDeleteBinLine />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
                   </div>
-
-                  <div className=" border mt-5">
-                      <Table data={data?.banner} columns={columns}/>
-                  </div>
-                </div>
-                <div className="w-full">
-                  {/* <h2 className=" text-[20px] font-semibold">Sit Banner</h2> */}
                 </div>
               </div>
+              <div className=" border mt-8"></div>
+
+              <SiteBammer />
             </div>
           </>
         )}
