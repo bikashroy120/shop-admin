@@ -25,6 +25,7 @@ import UpdateBlog from "../pages/UpdateBlog";
 import Invoice from "../pages/Invoice";
 import UserEdit from "../pages/UserEdit";
 import ViewProduct from "../pages/ViewProduct";
+import UserView from "../pages/UserView";
 
 const Router = () => {
   return (
@@ -56,6 +57,7 @@ const Router = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/user" element={<User />} />
       <Route path="/user/:id" element={<UserEdit />} />
+      <Route path="/user/view/:id" element={<UserView />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );

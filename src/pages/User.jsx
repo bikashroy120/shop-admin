@@ -95,7 +95,7 @@ const User = () => {
       cell: (row) => (
         <>
           <div className=" flex flex-row items-center gap-4">
-            <button onClick={() => navigate(`/update-product/${row._id}`)} className=" text-[22px] hover:text-green-500"><FaSearchPlus /></button>
+            <button onClick={() => navigate(`/user/view/${row._id}`)} className=" text-[22px] hover:text-green-500"><FaSearchPlus /></button>
             <button
               onClick={() => navigate(`/user/${row._id}`)}
               className=" text-[23px] hover:text-green-500"

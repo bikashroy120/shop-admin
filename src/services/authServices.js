@@ -22,6 +22,11 @@ export const getById  = async(id)=>{
     return res.data
 }
 
+export const getByIdAdmin  = async(id,searchQuery)=>{
+    const res = await Axios.get(`/user/user-order/admin/${id}?${searchQuery}`)
+    return res.data
+}
+
 export const getOrder  = async(searchQuery)=>{
     const res = await Axios.get(`/user/all-order?${searchQuery}`)
     return res.data
