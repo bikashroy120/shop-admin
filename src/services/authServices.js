@@ -47,8 +47,13 @@ export const updateOrder  = async(data)=>{
     return res.data
 }
 
-export const getDashbordData  = async()=>{
-    const res = await Axios.get("/user/dashborddata")
+export const getDashbordData  = async(queryFilter)=>{
+    const res = await Axios.get(`user/admin-dashboard?${queryFilter}`)
+    return res.data
+}
+
+export const getDashbordDataToday  = async()=>{
+    const res = await Axios.get("/user/admin-dashboard-today")
     return res.data
 }
 
