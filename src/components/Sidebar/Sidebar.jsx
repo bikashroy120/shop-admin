@@ -29,7 +29,7 @@ const Sidebar = ({ open, setOpen }) => {
       active: "dashboard",
       icon: MdOutlineDashboard,
     },
-    { name: "User", link: "/user", active: "user", icon: AiOutlineUser },
+    { name: "Customer", link: "/user", active: "user", icon: AiOutlineUser },
     {
       name: "Category",
       link: "/category",
@@ -143,15 +143,15 @@ const Sidebar = ({ open, setOpen }) => {
               key={i}
               className={` ${
                 menu?.margin && "mt-5"
-              } group flex items-center text-sm  gap-3.5 font-medium py-2 duration-200 px-4 hover:bg-green-500 rounded-md ${
-                isActive(menu?.active) ? " bg-green-500 text" : ""
+              } group flex items-center text-sm  gap-3.5 font-medium py-2 duration-200 px-4 hover:bg-primary  rounded-md ${
+                isActive(menu?.active) ? " bg-primary text-white" : ""
               }`}
             >
               <div>{React.createElement(menu?.icon, { size: "25" })}</div>
               <h2
-                style={{
-                  transitionDelay: `${i + 3}00ms`,
-                }}
+                // style={{
+                //   transitionDelay: `${i + 3}00ms`,
+                // }}
                 className={`whitespace-pre duration-500 font-semibold text-[18px] ${
                   !open && "opacity-0 translate-x-28 overflow-hidden"
                 }`}
