@@ -10,14 +10,18 @@ import {
   getDashbordDataToday,
 } from "../services/authServices";
 import Table from "../components/table/Table";
+import DashboardCardDesign from "../ui/DashboardCardDesign";
+import OrderChart from "../charts/OrderChart";
+import BestCategroySellChart from "../charts/BestCategroySellChart";
 
 const Dashboard = () => {
-    const [startDate, setStartDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [queryFilter, setQueryFilter] = useState("");
 
-
-  const { data, isLoading,refetch } = useQuery("order", ()=>getDashbordData(queryFilter));
+  const { data, isLoading, refetch } = useQuery("order", () =>
+    getDashbordData(queryFilter)
+  );
   const { data: today } = useQuery("order", getDashbordDataToday);
 
   const dashboard = [
@@ -72,8 +76,7 @@ const Dashboard = () => {
     // },
   ];
 
-
-    const handleOrderDateFilter = () => {
+  const handleOrderDateFilter = () => {
     if (!startDate || !endDate) {
       return alert("please select date");
     }
@@ -120,19 +123,37 @@ const Dashboard = () => {
                 icon="fa:search"
                 className=" text-white text-lg text-[24px] "
               /> */}
-              <IoSearchOutline  className=" text-white text-[24px] "/>
+              <IoSearchOutline className=" text-white text-[24px] " />
               <span className="md:hidden block">Search</span>
             </span>
           </div>
         </div>
 
-        <div className=" flex items-center w-full justify-between flex-col lg:flex-row gap-5 mt-8 ">
-          <div className="stats p-5">
-            <h3 className="stats__title">Last 7 days user</h3>
-            <div className="h-[400px]">
-              <MileChart />
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 flex-wrap">
+          {dashboard.map((dash, index) => (
+            <DashboardCardDesign
+              key={index}
+              customStyle={{
+                topBg: "hsl(195, 74%, 62%)",
+                mainBg: dash.color,
+              }}
+              title={dash.title}
+              value={dash.value}
+              subTitle={dash?.subTitle}
+            />
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-2 xl:gap-6 my-8 items-start ">
+          <div className="col-span-5 xl:col-span-3 h-full ">
+            <OrderChart />
           </div>
+          <div className="col-span-5 xl:col-span-2 h-full">
+            <BestCategroySellChart />
+          </div>
+        </div>
+
+        <div className=" flex items-center w-full justify-between flex-col lg:flex-row gap-5 mt-8 ">
 
           <div className="stats p-5">
             <h3 className="stats__title">Last 7 days Order </h3>
