@@ -13,6 +13,8 @@ import Table from "../components/table/Table";
 import DashboardCardDesign from "../ui/DashboardCardDesign";
 import OrderChart from "../charts/OrderChart";
 import BestCategroySellChart from "../charts/BestCategroySellChart";
+import DashBoardOrder from "../components/order/DashBoardOrder";
+import Loader from "../components/UI/Loader";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(null);
@@ -129,20 +131,24 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 flex-wrap">
-          {dashboard.map((dash, index) => (
-            <DashboardCardDesign
-              key={index}
-              customStyle={{
-                topBg: "hsl(195, 74%, 62%)",
-                mainBg: dash.color,
-              }}
-              title={dash.title}
-              value={dash.value}
-              subTitle={dash?.subTitle}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <Loader></Loader>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 flex-wrap">
+            {dashboard.map((dash, index) => (
+              <DashboardCardDesign
+                key={index}
+                customStyle={{
+                  topBg: "hsl(195, 74%, 62%)",
+                  mainBg: dash.color,
+                }}
+                title={dash.title}
+                value={dash.value}
+                subTitle={dash?.subTitle}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-2 xl:gap-6 my-8 items-start ">
           <div className="col-span-5 xl:col-span-3 h-full ">
@@ -153,27 +159,12 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className=" flex items-center w-full justify-between flex-col lg:flex-row gap-5 mt-8 ">
-
-          <div className="stats p-5">
-            <h3 className="stats__title">Last 7 days Order </h3>
-            <div className="h-[400px]">
-              <CarStatsChart />
-            </div>
-          </div>
-        </div>
-
-        {/* <div className="recommend__cars-wrapper">
-          {recommendCarsData.map((item) => (
-            <RecommendCarCard item={item} key={item.id} />
-          ))}
-        </div> */}
-
-        <div className=" text-white mt-7 ">
+        <div className=" mt-7 ">
           <div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between">
               <h2 className="text-[23px] font-semibold">Recent Order</h2>
             </div>
+            <DashBoardOrder />
           </div>
         </div>
       </div>
