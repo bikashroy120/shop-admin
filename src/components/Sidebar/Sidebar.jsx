@@ -70,7 +70,7 @@ const Sidebar = ({ open, setOpen }) => {
   return (
     <>
       <div
-        className={`sidebar min-h-screen border-r shadow-sm overflow-y-auto overflow-x-hidden ${
+        className={`sidebar min-h-screen border-r pb-10 shadow-sm overflow-y-auto overflow-x-hidden ${
           open ? "w-[250px]" : "w-[75px]"
         } duration-500 text-gray-800 px-2`}
       >
