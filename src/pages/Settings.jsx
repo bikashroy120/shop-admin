@@ -9,6 +9,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import Table from "../components/table/Table";
 import { RiDeleteBinLine } from "react-icons/ri";
 import SiteBammer from "../components/banner/SiteBammer";
+import ShippingCost from "../components/banner/ShippingCost";
 
 const Settings = () => {
   const [file, setFile] = useState();
@@ -180,6 +181,10 @@ const Settings = () => {
               <div className=" border mt-8"></div>
 
               <SiteBammer />
+
+              <div className=" border mt-8"></div>
+
+              <ShippingCost/>
             </div>
           </>
         )}
