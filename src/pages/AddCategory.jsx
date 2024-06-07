@@ -15,7 +15,7 @@ let schema = yup.object().shape({
 });
 
 const AddCategory = () => {
-  const [uploadLoading,setuploadLoading] = useState(false)
+  const [uploadLoading, setuploadLoading] = useState(false);
   const [file, setFile] = useState();
   const navgate = useNavigate();
 
@@ -23,7 +23,7 @@ const AddCategory = () => {
     onSuccess: (data) => {
       formik.resetForm();
       toast.success("Add Category success");
-      setFile("")
+      setFile("");
     },
     onError: () => {
       toast.error("error ");
@@ -32,7 +32,7 @@ const AddCategory = () => {
 
   const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
-    setuploadLoading(true)
+    setuploadLoading(true);
     const image = e.target.files[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -43,9 +43,10 @@ const AddCategory = () => {
       .then((res) => res.json())
       .then((result) => {
         setFile(result.data?.url);
-        setuploadLoading(false)
-      }).catch((error)=>{
-        setuploadLoading(false)
+        setuploadLoading(false);
+      })
+      .catch((error) => {
+        setuploadLoading(false);
       });
   };
 
@@ -66,21 +67,21 @@ const AddCategory = () => {
   });
 
   return (
-    <div className="dasbord_laout text-white">
+    <div className="dasbord_laout ">
       <PageTitle title={"Add Category"} />
 
       <form
         onSubmit={formik.handleSubmit}
-        className=" bg-primary py-8 rounded-lg px-5"
+        className=" bg-white shadow-sm py-8 rounded-lg px-5"
       >
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Name
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg  "
               placeholder="Category Title"
               onChange={formik.handleChange("title")}
               onBlur={formik.handleBlur("title")}
@@ -95,7 +96,7 @@ const AddCategory = () => {
           </div>
         </div>
         <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Description
           </label>
           <div className="md:w-[70%] w-full">
@@ -104,7 +105,7 @@ const AddCategory = () => {
               id=""
               cols="10"
               rows="10"
-              className=" w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="h-[200px] w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
               placeholder="Category Description"
               onChange={formik.handleChange("description")}
               onBlur={formik.handleBlur("description")}
@@ -120,7 +121,7 @@ const AddCategory = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] font-medium text-gray-700" htmlFor="">
             Image
           </label>
           <div className="md:w-[70%] w-full">
@@ -128,9 +129,7 @@ const AddCategory = () => {
               <div className="md:flex items-center gap-2">
                 {/* <p className="text-info text-lg font-bold">Icon:</p> */}
                 <div className="relative border-2 rounded-lg border-gray-400 border-dashed w-full h-[100px]  text-center flex items-center justify-center flex-col">
-                  <p className="text-xl font-bold  ">
-                    Drag your image here
-                  </p>
+                  <p className="text-xl font-bold  ">Drag your image here</p>
                   <span className="text-xs font-bold ">
                     (Only *.jpeg and *.png images will be accepted)
                   </span>
@@ -141,7 +140,11 @@ const AddCategory = () => {
                   />
                 </div>
               </div>
-              {uploadLoading && <div><h2>Image Uploading...</h2></div>}
+              {uploadLoading && (
+                <div>
+                  <h2>Image Uploading...</h2>
+                </div>
+              )}
               {file && (
                 <div className="flex justify-center sm:justify-start ">
                   <div className="  w-[200px] h-auto p-1 bg-white shadow-md rounded-md mt-3 ">
@@ -157,23 +160,22 @@ const AddCategory = () => {
           </div>
         </div>
 
-        <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
-          <button
-            onClick={() => navgate("/category")}
-            className=" py-3 px-10 rounded-lg bg-gray-600 w-full md:w-auto text-white "
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className=" py-3 px-10 w-full md:w-auto rounded-lg bg-green-600 hover:bg-green-700 duration-300"
-          >
-            {isLoading ? (
-                "Loading..."
-            ) : (
-              "Add Category"
-            )}
-          </button>
+        <div className=" flex items-center justify-between">
+          <div className="md:w-[30%] w-full"></div>
+          <div className="md:w-[70%] w-full flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+            <button
+              onClick={() => navgate("/category")}
+              className=" py-3 px-10 rounded-lg hover:bg-red-500 bg-gray-600 w-full  text-white "
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" py-3 px-10 w-full rounded-lg bg-primary text-white hover:bg-green-700 duration-300"
+            >
+              {isLoading ? "Loading..." : "Add Category"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

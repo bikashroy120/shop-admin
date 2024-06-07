@@ -3,7 +3,7 @@ import { ColorRing } from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div className="w-full h-[500px] bg-primary flex items-center justify-center rounded-lg">
+    <div className="w-full h-[500px] bg-white shadow-md flex items-center justify-center rounded-lg">
       <ColorRing
         visible={true}
         height="100"

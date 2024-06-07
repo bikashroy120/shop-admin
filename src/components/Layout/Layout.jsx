@@ -21,7 +21,7 @@ const Layout = () => {
     <div className="layout">
       <Sidebar setOpen={setOpen} open={open}/>
       <div className={open ? "main__layout duration-500" :"main__layout2 duration-500"}>
-        <TopNav open={open}/>
+        <TopNav open={open} setOpen={setOpen}/>
 
         <div className="content">
           <Router />
