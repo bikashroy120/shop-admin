@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-  --primary-color: #181b3a;
-  --secondary-color: #01d293;
+  --primary-color: #01d293;
+  --secondary-color: #181b3a;
   --body-bg: #0b0c28;
   --card-01-bg: linear-gradient(#ef621c, #e1424e);
   --card-02-bg: linear-gradient(#01d293, #56c57a);
@@ -23,7 +23,17 @@
 
 body {
   font-family: "DM Sans", sans-serif;
-  background: var(--body-bg);
+  background: rgb(249 250 251 /1);
+}
+
+/* ----- -----------------style for scrollbar----------------*/
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(172, 172, 194);
+  border-radius: 10px;
 }
 
 ul {
@@ -43,11 +53,15 @@ a {
   margin-left: 50px;
 }
 
+input {
+  background: "rgb(243 244 246/1)";
+}
+
 img {
   width: 100%;
 }
 
-.dasbord_laout{
+.dasbord_laout {
   margin-top: 100px;
   margin-left: 20px;
   padding: 0px 30px;
@@ -79,24 +93,20 @@ img {
   }
 }
 
-
 @media screen and (max-width: 880px) {
   .main__layout2 {
     margin-left: 45px;
   }
-  .dasbord_laout{
+  .dasbord_laout {
     padding: 0px 10px;
-
   }
 }
-
 
 /* --------------------ant table pagination---------------- */
 
 .ant-pagination-next {
   margin-right: 22px !important;
 }
-
 
 /* .ant-pagination-prev {
   border-radius: 8px !important;
@@ -106,7 +116,7 @@ img {
 } */
 
 .ant-pagination-item-link {
-  color: #fff !important;
+  color: gray !important;
 }
 
 .ant-pagination-item-link:disabled {
@@ -127,10 +137,8 @@ img {
 
 } */
 
-
 .ant-pagination-item a {
-  color: #fff !important;
-
+  color: gray !important;
 }
 
 .ant-pagination-item-active {
@@ -143,5 +151,83 @@ img {
   color: #fff !important;
   font-size: 13px !important;
   font-weight: bold !important;
+}
 
+/* ------------------------------------admin dashboard card design---------------- */
+.adminCard {
+  --primary-clr: #1c204b;
+  --dot-clr: #bbc0ff;
+  --play: hsl(195, 74%, 62%);
+  min-width: 200px;
+  height: 170px;
+  border-radius: 10px;
+}
+
+.adminCard {
+  font-family: "Arial";
+  color: #fff;
+  display: grid;
+  cursor: pointer;
+  grid-template-rows: 50px 1fr;
+}
+
+.adminCard:hover .img-section {
+  transform: translateY(1em);
+}
+
+.adminCard-desc {
+  border-radius: 10px;
+  padding: 15px;
+  position: relative;
+  top: -10px;
+  display: grid;
+  gap: 10px;
+  /* background: var(--primary-clr); */
+}
+
+.adminCard-time {
+  font-size: 1.7em;
+  font-weight: 500;
+}
+
+.img-section {
+  transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.adminCard-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.adminCard-title {
+  flex: 1;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.adminCard-menu {
+  display: flex;
+  gap: 4px;
+  margin-inline: auto;
+}
+
+.adminCard svg {
+  float: right;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.adminCard .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dot-clr);
+}
+
+.adminCard .recent {
+  line-height: 0;
+  font-size: 0.8em;
 }

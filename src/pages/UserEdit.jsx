@@ -5,17 +5,17 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { singalCategory, updateCategory } from "../services/categoryServices";
 import PageTitle from "../ui/PageTitle";
 import Loader from "../components/UI/Loader";
 import { key } from "../utils/base_url";
+import { getById, updateUserAdmin } from "../services/authServices";
 
 let schema = yup.object().shape({
-  title: yup.string().required("title is Required"),
-  description: yup.string().required("description is Required"),
+  fastname: yup.string().required("First Name is Required"),
+  lastname: yup.string().required("Last Name is Required"),
 });
 
-const UpdateCategory = () => {
+const UserEdit = () => {
   const parems = useParams();
   const itemID = parems.id;
   const queryClient = useQueryClient();
@@ -25,16 +25,17 @@ const UpdateCategory = () => {
     data,
     isSuccess,
     isLoading: pageLoading,
-  } = useQuery(["category1", itemID], () => singalCategory(itemID));
+  } = useQuery(["category1", itemID], () => getById(itemID));
+
   const { mutate, isLoading } = useMutation(
-    (data) => updateCategory(data, itemID),
+    (data) => updateUserAdmin(data, itemID),
     {
       onSuccess: (data) => {
         // Invalidate and refetch
         formik.resetForm();
-        toast.success("Update Category success");
+        toast.success("User update success");
         queryClient.invalidateQueries(["category1"]);
-        navgate("/category");
+        navgate("/user");
       },
       onError: () => {
         toast.error("error ");
@@ -61,15 +62,17 @@ const UpdateCategory = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
+      fastname: "",
+      lastname: "",
       image: "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
       const data = {
-        title: values.title,
-        description: values.description,
+        fastname: values.fastname,
+        lastname: values.lastname,
+        mobile: values.mobile,
+        city: values.city,
         image: file,
       };
       mutate(data);
@@ -77,11 +80,11 @@ const UpdateCategory = () => {
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      formik.values.title = data?.title;
-      formik.values.description = data?.description;
-      setFile(data?.image);
-    }
+      formik.values.fastname = data?.user?.fastname;
+      formik.values.lastname = data?.user?.lastname;
+      formik.values.mobile = data?.user?.mobile;
+      formik.values.city = data?.user?.city;
+      setFile(data?.user?.image);
   }, [isSuccess, data]);
 
   return (
@@ -97,66 +100,113 @@ const UpdateCategory = () => {
             {" "}
             <form
               onSubmit={formik.handleSubmit}
-              className=" bg-white shadow-sm py-8 rounded-lg px-5"
+              className=" bg-white py-8 rounded-lg text-gray-700 px-5"
             >
               <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
                 <label
-                  className=" text-[18px] text-gray-700 font-medium"
+                  className=" text-[18px] font-medium text-gray-700"
                   htmlFor=""
                 >
-                  Name
+                  First Name
                 </label>
                 <div className="md:w-[70%] w-full">
                   <input
                     type="text"
-                    className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
-                    placeholder="Category Title"
-                    onChange={formik.handleChange("title")}
-                    onBlur={formik.handleBlur("title")}
-                    value={formik.values.title}
+                    className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
+                    placeholder="Enter First Name"
+                    onChange={formik.handleChange("fastname")}
+                    onBlur={formik.handleBlur("fastname")}
+                    value={formik.values.fastname}
                   />
                   <div
                     className="error text-red-500"
                     style={{ height: "5px", marginLeft: "5px" }}
                   >
-                    {formik.touched.title && formik.errors.title}
-                  </div>
-                </div>
-              </div>
-              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-                <label
-                  className=" text-[18px] text-gray-700 font-medium"
-                  htmlFor=""
-                >
-                  Description
-                </label>
-                <div className="md:w-[70%] w-full">
-                  <textarea
-                    name=""
-                    id=""
-                    cols="10"
-                    rows="10"
-                    className=" w-full h-[200px] bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
-                    placeholder="Category Description"
-                    onChange={formik.handleChange("description")}
-                    onBlur={formik.handleBlur("description")}
-                    value={formik.values.description}
-                  ></textarea>
-                  <div
-                    className="error text-red-500"
-                    style={{ height: "5px", marginLeft: "5px" }}
-                  >
-                    {formik.touched.description && formik.errors.description}
+                    {formik.touched.fastname && formik.errors.fastname}
                   </div>
                 </div>
               </div>
 
               <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
                 <label
-                  className="text-gray-700 text-[18px] font-medium"
+                  className=" text-[18px] font-medium text-gray-700"
                   htmlFor=""
                 >
-                  Image
+                  Last Name
+                </label>
+                <div className="md:w-[70%] w-full">
+                  <input
+                    type="text"
+                    className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg  "
+                    placeholder="Enter Last Name"
+                    onChange={formik.handleChange("lastname")}
+                    onBlur={formik.handleBlur("lastname")}
+                    value={formik.values.lastname}
+                  />
+                  <div
+                    className="error text-red-500"
+                    style={{ height: "5px", marginLeft: "5px" }}
+                  >
+                    {formik.touched.lastname && formik.errors.lastname}
+                  </div>
+                </div>
+              </div>
+
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
+                <label
+                  className=" text-[18px] font-medium text-gray-700"
+                  htmlFor=""
+                >
+                  Phone Number
+                </label>
+                <div className="md:w-[70%] w-full">
+                  <input
+                    type="text"
+                    className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
+                    placeholder="Enter Phone Number"
+                    onChange={formik.handleChange("mobile")}
+                    onBlur={formik.handleBlur("mobile")}
+                    value={formik.values.mobile}
+                  />
+                  <div
+                    className="error text-red-500"
+                    style={{ height: "5px", marginLeft: "5px" }}
+                  >
+                    {formik.touched.mobile && formik.errors.mobile}
+                  </div>
+                </div>
+              </div>
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
+                <label
+                  className=" text-[18px] font-medium text-gray-700"
+                  htmlFor=""
+                >
+                  Address
+                </label>
+                <div className="md:w-[70%] w-full">
+                  <input
+                    type="text"
+                    className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
+                    placeholder="Enter Address"
+                    onChange={formik.handleChange("city")}
+                    onBlur={formik.handleBlur("city")}
+                    value={formik.values.city}
+                  />
+                  <div
+                    className="error text-red-500"
+                    style={{ height: "5px", marginLeft: "5px" }}
+                  >
+                    {formik.touched.city && formik.errors.city}
+                  </div>
+                </div>
+              </div>
+
+              <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
+                <label
+                  className=" text-[18px] text-gray-700 font-medium"
+                  htmlFor=""
+                >
+                  User Image
                 </label>
                 <div className="md:w-[70%] w-full">
                   <div className="w-full my-3">
@@ -192,11 +242,11 @@ const UpdateCategory = () => {
               </div>
 
               <div className=" flex items-center justify-between">
-                <div className=" md:w-[30%] w-full"></div>
-                <div className="md:w-[70%] w-full flex items-center flex-col md:flex-row  justify-center gap-6 py-5 ">
+                <div></div>
+                <div className=" md:w-[70%] w-full flex items-center flex-col md:flex-row justify-between md:gap-6 py-5 ">
                   <button
-                    onClick={() => navgate("/category")}
-                    className=" py-3 px-10 rounded-lg bg-gray-600 w-full hover:bg-red-500 text-white "
+                    onClick={() => navgate("/user")}
+                    className=" py-3 px-10 rounded-lg bg-gray-600 hover:bg-red-500 w-full text-white "
                   >
                     Cancel
                   </button>
@@ -216,4 +266,4 @@ const UpdateCategory = () => {
   );
 };
 
-export default UpdateCategory;
+export default UserEdit;

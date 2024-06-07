@@ -3,24 +3,40 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./top-nav.css";
 import { useSelector } from "react-redux";
+import { HiMenuAlt3 } from "react-icons/hi";
 
-const TopNav = ({ open }) => {
+const TopNav = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.auth);
-  const navegate = useNavigate()
+  const navegate = useNavigate();
 
-  const logoutFun = ()=>{
-    localStorage.clear()
-    navegate("/")
-  }
+  const logoutFun = () => {
+    localStorage.clear();
+    navegate("/");
+  };
 
   return (
-    <div className={open ? "top__nav duration-500" : "top__nav2 duration-500"}>
+    <div
+      className={
+        open
+          ? "top__nav duration-500 border-b shadow-sm "
+          : "top__nav2 duration-500 border-b shadow-sm"
+      }
+    >
       <div className="top__nav-wrapper">
-        <div className="search__box">
+        {/* <div className="search__box">
           <input type="text" placeholder="search or type" />
           <span>
             <i class="ri-search-line"></i>
           </span>
+          
+        </div> */}
+
+        <div>
+          <HiMenuAlt3
+            size={27}
+            className="cursor-pointer"
+            onClick={() => setOpen(!open)}
+          />
         </div>
         <div className="top__nav-right">
           {/* <span className="notification">
@@ -37,7 +53,12 @@ const TopNav = ({ open }) => {
             </Link>
           </div>
           <div className="h-full">
-            <span onClick={()=>logoutFun()} className=" bg-red-600 py-2 px-5 text-[18px] font-semibold text-white rounded-md cursor-pointer hover:bg-red-700">logout</span>
+            <span
+              onClick={() => logoutFun()}
+              className=" bg-red-600 py-2 px-5 text-[18px] font-semibold text-white rounded-md cursor-pointer hover:bg-red-700"
+            >
+              logout
+            </span>
           </div>
         </div>
       </div>

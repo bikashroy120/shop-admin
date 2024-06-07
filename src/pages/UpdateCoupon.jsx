@@ -83,7 +83,7 @@ const UpdateCoupon = () => {
     if (isSuccess) {
       setTitle(data?.title);
       setName(data?.name);
-      setexpiry(data?.expiry.slice(0,10));
+      setexpiry(data?.expiry.slice(0, 10));
       setdiscount(data?.discount);
       setFile(data?.image);
     }
@@ -92,25 +92,30 @@ const UpdateCoupon = () => {
   console.log(data);
 
   return (
-    <div className="dasbord_laout text-white">
-    <PageTitle title={"Update Coupon"} />
+    <div className="dasbord_laout">
+      <PageTitle title={"Update Coupon"} />
 
       {pageLoading ? (
-        <><Loader/></>
+        <>
+          <Loader />
+        </>
       ) : (
         <>
           <form
             onSubmit={(e) => handleSubmit(e)}
-            className=" bg-primary py-8 rounded-lg px-5"
+            className=" bg-white shadow-sm py-8 rounded-lg px-5"
           >
             <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-              <label className=" text-[18px] font-medium" htmlFor="">
+              <label
+                className=" text-[18px] text-gray-700 font-medium"
+                htmlFor=""
+              >
                 Coupon title
               </label>
               <div className="w-full md:w-[70%]">
                 <input
                   type="text"
-                  className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+                  className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
                   placeholder="Category Title"
                   onChange={(e) => setTitle(e.target.value)}
                   value={title}
@@ -119,13 +124,16 @@ const UpdateCoupon = () => {
             </div>
 
             <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-              <label className=" text-[18px] font-medium" htmlFor="">
+              <label
+                className=" text-[18px] text-gray-700 font-medium"
+                htmlFor=""
+              >
                 Coupon Code
               </label>
               <div className="w-full md:w-[70%]">
                 <input
                   type="text"
-                  className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+                  className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
                   placeholder="Category Title"
                   onChange={(e) => setName(e.target.value)}
                   value={name}
@@ -134,13 +142,16 @@ const UpdateCoupon = () => {
             </div>
 
             <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-              <label className=" text-[18px] font-medium" htmlFor="">
-                Name
+              <label
+                className=" text-[18px] text-gray-700 font-medium"
+                htmlFor=""
+              >
+                Expiry Date
               </label>
               <div className="w-full md:w-[70%]">
                 <input
                   type="Date"
-                  className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+                  className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
                   placeholder="Category Title"
                   value={expiry}
                   onChange={(e) => setexpiry(e.target.value)}
@@ -149,13 +160,16 @@ const UpdateCoupon = () => {
             </div>
 
             <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-              <label className=" text-[18px] font-medium" htmlFor="">
-                Name
+              <label
+                className=" text-[18px] text-gray-700 font-medium"
+                htmlFor=""
+              >
+                Discount
               </label>
               <div className="w-full md:w-[70%]">
                 <input
                   type="number"
-                  className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+                  className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
                   placeholder="Category Title"
                   onChange={(e) => setdiscount(e.target.value)}
                   value={discount}
@@ -164,7 +178,10 @@ const UpdateCoupon = () => {
             </div>
 
             <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-              <label className=" text-[18px] font-medium" htmlFor="">
+              <label
+                className=" text-[18px] text-gray-700 font-medium"
+                htmlFor=""
+              >
                 Image
               </label>
               <div className="md:w-[70%] w-full">
@@ -205,19 +222,22 @@ const UpdateCoupon = () => {
               </div>
             </div>
 
-            <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
-              <button
-                onClick={() => navgate("/coupon")}
-                className=" py-3 px-10 rounded-lg w-full md:w-auto bg-gray-600 text-white "
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className=" py-3 px-10 rounded-lg w-full md:w-auto bg-green-600 hover:bg-green-700 duration-300"
-              >
-                {isLoading ? "Loading..." : "Update"}
-              </button>
+            <div className="flex items-center">
+              <div className="md:w-[30%] w-full"></div>
+              <div className="md:w-[70%] w-full flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+                <button
+                  onClick={() => navgate("/coupon")}
+                  className=" py-3 px-10 rounded-lg w-full hover:bg-red-500 bg-gray-600 text-white "
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className=" py-3 px-10 rounded-lg w-full bg-primary text-white hover:bg-green-700 duration-300"
+                >
+                  {isLoading ? "Loading..." : "Update"}
+                </button>
+              </div>
             </div>
           </form>
         </>

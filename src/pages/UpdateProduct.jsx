@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
-import { getCategory } from "../services/categoryServices";
+import { getCategory, getCategory2 } from "../services/categoryServices";
 import { singalProduct, updateProduct } from "../services/productServices";
-import { getBrand } from "../services/barndServices";
+import { getBrand, getBrand2 } from "../services/barndServices";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import PageTitle from "../ui/PageTitle";
@@ -13,8 +13,8 @@ import { MdDeleteForever } from "react-icons/md";
 
 const UpdateProduct = () => {
   const navgate = useNavigate();
-  const brands = useQuery("brand", getBrand);
-  const categorys = useQuery("category", getCategory);
+  const brands = useQuery("brand", getBrand2);
+  const categorys = useQuery("category", getCategory2);
   const [title, settitle] = useState();
   const [description, setdescription] = useState();
   const [bprice, setbprice] = useState();
@@ -22,13 +22,15 @@ const UpdateProduct = () => {
   const [category, setcategory] = useState();
   const [brand, setbrand] = useState();
   const [quantity, setquantity] = useState();
+  const [sku,setSku] = useState()
   const [imageUrl, setImageUrl] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
   const parems = useParams();
   const itemID = parems.id;
 
-
-  const { data,isSuccess } = useQuery(["product1", itemID], () => singalProduct(itemID));
+  const { data, isSuccess } = useQuery(["product1", itemID], () =>
+    singalProduct(itemID)
+  );
   const { mutate, isLoading } = useMutation(
     (data) => updateProduct(data, itemID),
     {
@@ -42,7 +44,6 @@ const UpdateProduct = () => {
       },
     }
   );
-
 
   const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
@@ -63,7 +64,7 @@ const UpdateProduct = () => {
         setImageLoading(false);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         toast.error("Image upload file");
         setImageLoading(false);
       });
@@ -71,10 +72,9 @@ const UpdateProduct = () => {
 
   // ------------------------remove image-----------------------------
   const handleRemoveImage = (index) => {
-    const updateImage =  imageUrl?.filter((item)=>item!==index);
-    setImageUrl(updateImage)
+    const updateImage = imageUrl?.filter((item) => item !== index);
+    setImageUrl(updateImage);
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +86,7 @@ const UpdateProduct = () => {
       category,
       brand,
       quantity,
-      images:imageUrl,
+      images: imageUrl,
     };
     mutate(data);
   };
@@ -99,26 +99,26 @@ const UpdateProduct = () => {
     setbrand(data?.brand);
     setcategory(data?.category);
     setquantity(data?.quantity);
-    setImageUrl(data?.images)
-  }, [isSuccess,data]);
+    setSku(data?.sku)
+    setImageUrl(data?.images);
+  }, [isSuccess, data]);
 
   return (
-    <div className="dasbord_laout text-white">
-
+    <div className="dasbord_laout">
       <PageTitle title={"Update Product"} />
 
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className=" bg-primary py-8 rounded-lg px-5"
+        className=" bg-white shadow-sm py-8 rounded-lg px-5"
       >
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Name
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
               placeholder="Category Title"
               onChange={(e) => settitle(e.target.value)}
               value={title}
@@ -127,10 +127,10 @@ const UpdateProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Description
           </label>
-          <div className="md:w-[70%] w-full">
+          <div className="md:w-[70%] w-full bg-inputBg border border-gray-200  text-[18px] outline-none focus:bg-white rounded-lg">
             <ReactQuill
               //   theme="snow"
               value={description}
@@ -144,15 +144,29 @@ const UpdateProduct = () => {
             />
           </div>
         </div>
+        <div className=" flex items-start flex-col md:flex-row justify-between my-10">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
+            Product SKU
+          </label>
+          <div className="md:w-[70%] w-full">
+            <input
+              type="text"
+              className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
+              placeholder="Enter sku..."
+              value={sku}
+              onChange={(e)=>setSku(e.target.value)}
+            />
+          </div>
+        </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Buy Price
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
               placeholder="Buy Price..."
               onChange={(e) => setbprice(e.target.value)}
               value={bprice}
@@ -161,13 +175,13 @@ const UpdateProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Sale Price
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Price..."
               onChange={(e) => setprice(e.target.value)}
               value={price}
@@ -176,12 +190,12 @@ const UpdateProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Product Category
           </label>
           <div className="w-full md:w-[70%]">
             <select
-              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               name="cars"
               id="cars"
               onChange={(e) => setcategory(e.target.value)}
@@ -202,12 +216,12 @@ const UpdateProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Product Brand
           </label>
           <div className="md:w-[70%] w-full">
             <select
-              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               name="cars"
               id="cars"
               onChange={(e) => setbrand(e.target.value)}
@@ -228,13 +242,13 @@ const UpdateProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] font-medium text-gray-700" htmlFor="">
             Quantity
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
               placeholder="Buy Price..."
               onChange={(e) => setquantity(e.target.value)}
               value={quantity}
@@ -262,44 +276,54 @@ const UpdateProduct = () => {
                   />
                 </div>
               </div>
-                {
-                  imageLoading &&  <div>
+              {imageLoading && (
+                <div>
                   <h2>uploading...</h2>
                 </div>
-                }
+              )}
               {imageUrl && (
                 <div className="flex justify-center gap-2 sm:justify-start ">
-                  {
-                    imageUrl.map((file,index)=>(
-                      <div key={index} className=" group relative w-[100px] h-[60px] rounded-lg   shadow-md overflow-hidden mt-3 ">
+                  {imageUrl.map((file, index) => (
+                    <div
+                      key={index}
+                      className=" group relative w-[100px] h-[60px] rounded-lg   shadow-md overflow-hidden mt-3 "
+                    >
                       <img
                         src={file}
                         alt="product"
                         className="w-full h-full object-cover"
                       />
-                        <button type="button" onClick={()=>handleRemoveImage(file)} className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"><MdDeleteForever /></button>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(file)}
+                        className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"
+                      >
+                        <MdDeleteForever />
+                      </button>
                     </div>
-                    ))
-                  }
+                  ))}
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
-          <button
-            onClick={() => navgate("/product")}
-            className=" py-3 px-10 rounded-lg w-full md:w-auto bg-gray-600 text-white "
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className=" py-3 px-10 w-full md:w-auto rounded-lg bg-green-600 hover:bg-green-700 duration-300"
-          >
-            {isLoading ? "Loading..." : "Update Product"}
-          </button>
+        <div className="flex items-center justify-between">
+          <div className="md:w-[30%] w-full"></div>
+          <div className=" md:w-[70%] w-full flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+            <button
+              onClick={() => navgate("/product")}
+              className=" py-3 px-10 rounded-lg w-full hover:bg-red-500 bg-gray-600 text-white "
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" py-3 px-10 w-full rounded-lg bg-primary text-white hover:bg-green-700 duration-300"
+            >
+              {isLoading ? "Loading..." : "Update Product"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

@@ -4,9 +4,9 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
-import { getCategory } from "../services/categoryServices";
+import { getCategory, getCategory2 } from "../services/categoryServices";
 import { addProduct } from "../services/productServices";
-import { getBrand } from "../services/barndServices";
+import { getBrand, getBrand2 } from "../services/barndServices";
 import PageTitle from "../ui/PageTitle";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -25,26 +25,24 @@ let schema = yup.object().shape({
 
 const AddProduct = () => {
   const navgate = useNavigate();
-  const brand = useQuery("brand", getBrand);
-  const category = useQuery("category", getCategory);
+  const brand = useQuery("brand", getBrand2);
+  const category = useQuery("category", getCategory2);
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
-
 
   const { mutate, isLoading } = useMutation(addProduct, {
     onSuccess: (data) => {
       // Invalidate and refetch
       formik.resetForm();
-      setDescription("")
-      setImageUrl([])
+      setDescription("");
+      setImageUrl([]);
       toast.success("Add Product success");
     },
     onError: () => {
       toast.error("error ");
     },
   });
-
 
   const formik = useFormik({
     initialValues: {
@@ -72,16 +70,16 @@ const AddProduct = () => {
       // });
 
       const data = {
-        title:values.title,
-        description:description,
-        bprice:values.bprice,
-        price:values.price,
-        category:values.category,
-        brand:values.brand,
-        quantity:values.quantity,
-        sku:values.sku,
-        images:imageUrl,
-      }
+        title: values.title,
+        description: description,
+        bprice: values.bprice,
+        price: values.price,
+        category: values.category,
+        brand: values.brand,
+        quantity: values.quantity,
+        sku: values.sku,
+        images: imageUrl,
+      };
 
       mutate(data);
     },
@@ -117,20 +115,20 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="dasbord_laout text-white">
+    <div className="dasbord_laout">
       <PageTitle title={"Add Product"} />
       <form
         onSubmit={formik.handleSubmit}
-        className=" bg-primary py-8 rounded-lg px-5"
+        className=" bg-white shadow-sm py-8 rounded-lg px-5"
       >
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Name
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Product Title"
               onChange={formik.handleChange("title")}
               onBlur={formik.handleBlur("title")}
@@ -145,10 +143,10 @@ const AddProduct = () => {
           </div>
         </div>
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Description
           </label>
-          <div className="md:w-[70%] w-full">
+          <div className="md:w-[70%] w-full bg-inputBg border border-gray-200 text-[18px] outline-none focus:bg-white rounded-lg">
             {/* <textarea name="" id="" cols="10" rows="10" className=' w-full h-[200px] bg-transparent border border-[#808191] py-3 px-5 rounded-lg ' placeholder='Product Description'
                     onChange={formik.handleChange("description")}
                     onBlur={formik.handleBlur("description")}
@@ -172,13 +170,13 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
-            Buy Price
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
+            Product SKU
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Enter sku..."
               onChange={formik.handleChange("sku")}
               onBlur={formik.handleBlur("sku")}
@@ -194,14 +192,14 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
-            Buy Price
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
+            Product Price
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
-              placeholder="Buy Price..."
+              className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg "
+              placeholder="Product Price..."
               onChange={formik.handleChange("bprice")}
               onBlur={formik.handleBlur("bprice")}
               value={formik.values.bprice}
@@ -216,13 +214,13 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Sale Price
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Price..."
               onChange={formik.handleChange("price")}
               onBlur={formik.handleBlur("price")}
@@ -238,12 +236,12 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Product Category
           </label>
           <div className="md:w-[70%] w-full">
             <select
-              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               name="cars"
               id="cars"
               onChange={formik.handleChange("category")}
@@ -271,12 +269,12 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Product Brand
           </label>
           <div className="md:w-[70%] w-full">
             <select
-              className=" w-full bg-primary border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               name="cars"
               id="cars"
               onChange={formik.handleChange("brand")}
@@ -307,14 +305,14 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Quantity
           </label>
           <div className="md:w-[70%] w-full">
             <input
               type="number"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
-              placeholder="Buy Price..."
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
+              placeholder="Product Quantity"
               onChange={formik.handleChange("quantity")}
               onBlur={formik.handleBlur("quantity")}
               value={formik.values.quantity}
@@ -329,7 +327,7 @@ const AddProduct = () => {
         </div>
 
         <div className=" flex items-start  flex-col md:flex-row  justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Image
           </label>
           <div className="md:w-[70%] w-full">
@@ -348,48 +346,55 @@ const AddProduct = () => {
                   />
                 </div>
               </div>
-                {
-                  imageLoading &&  <div>
+              {imageLoading && (
+                <div>
                   <h2>uploading...</h2>
                 </div>
-                }
+              )}
               {imageUrl && (
                 <div className="flex justify-center gap-2 sm:justify-start ">
-                  {
-                    imageUrl.map((file,index)=>(
-                      <div key={index} className=" group relative w-[100px] h-[60px] rounded-lg   shadow-md overflow-hidden mt-3 ">
+                  {imageUrl.map((file, index) => (
+                    <div
+                      key={index}
+                      className=" group relative w-[100px] h-[60px] rounded-lg   shadow-md overflow-hidden mt-3 "
+                    >
                       <img
                         src={file}
                         alt="product"
                         className="w-full h-full object-cover"
                       />
-                        <button type="button" onClick={()=>handleRemoveImage(index)} className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"><MdDeleteForever /></button>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(index)}
+                        className="text-[20px] group-hover:flex  absolute top-0 right-0  hidden duration-300 items-center justify-center w-full h-full bg-black/30 text-red-500"
+                      >
+                        <MdDeleteForever />
+                      </button>
                     </div>
-                    ))
-                  }
+                  ))}
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className=" flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
-          <button
-            onClick={() => navgate("/product")}
-            className=" py-3 px-10 w-full md:w-auto rounded-lg bg-gray-600 text-white "
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className=" py-3 px-10 rounded-lg w-full md:w-auto bg-green-600 hover:bg-green-700 duration-300"
-          >
-            {isLoading ? (
-              "Loading..."
-            ) : (
-              "Add Product"
-            )}
-          </button>
+        <div className=" flex items-center justify-between">
+          <div className=" md:w-[30%] w-full"></div>
+
+          <div className=" md:w-[70%] w-full flex items-center flex-col md:flex-row justify-center gap-6 py-5 ">
+            <button
+              onClick={() => navgate("/product")}
+              className=" py-3 px-10 w-full hover:bg-red-500 rounded-lg bg-gray-600 text-white "
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" py-3 px-10 rounded-lg w-full bg-primary text-white hover:bg-green-700 duration-300"
+            >
+              {isLoading ? "Loading..." : "Add Product"}
+            </button>
+          </div>
         </div>
       </form>
     </div>
