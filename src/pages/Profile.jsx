@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useMutation} from "react-query";
+import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { key } from "../utils/base_url";
 import { updateUser } from "../services/authServices";
@@ -15,8 +15,7 @@ const Profile = () => {
 
   const { user } = useSelector((state) => state.auth);
 
-
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     if (user) {
@@ -24,24 +23,21 @@ const Profile = () => {
       setlastname(user?.lastname);
       setmobilet(user?.mobile);
       setcityt(user?.city);
-      setFile(user?.image)
+      setFile(user?.image);
     }
   }, [user]);
 
-  const { mutate, isLoading } = useMutation(
-    (data) => updateUser(data),
-    {
-      onSuccess: (data) => {
-        // Invalidate and refetch
-        toast.success("Profile update success");
-        localStorage.setItem("Admin", JSON.stringify(data))
-        localStorage.setItem("jwtToken", JSON.stringify(data.token))
-      },
-      onError: () => {
-        toast.error("error ");
-      },
-    }
-  );
+  const { mutate, isLoading } = useMutation((data) => updateUser(data), {
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      toast.success("Profile update success");
+      localStorage.setItem("Admin", JSON.stringify(data));
+      localStorage.setItem("jwtToken", JSON.stringify(data.token));
+    },
+    onError: () => {
+      toast.error("error ");
+    },
+  });
 
   const imgUrl = `https://api.imgbb.com/1/upload?key=${key}`;
   const handleImageUpload = (e) => {
@@ -66,7 +62,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      firstname:fastname,
+      firstname: fastname,
       lastname,
       mobile,
       city,
@@ -84,17 +80,17 @@ const Profile = () => {
   //   console.log(data)
 
   return (
-    <div className="dasbord_laout text-white">
+    <div className="dasbord_laout">
       <div className="pb-5">
         <h2 className=" font-semibold text-[23px]">Update Profile</h2>
       </div>
 
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className=" bg-primary py-8 rounded-lg px-5"
+        className=" bg-white shadow-sm py-8 rounded-lg px-5"
       >
         <div className=" flex items-start flex-col md:flex-row  justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Image
           </label>
           <div className="md:w-[70%] w-full">
@@ -134,13 +130,13 @@ const Profile = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             First Name
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="First Name"
               onChange={(e) => setfastname(e.target.value)}
               value={fastname}
@@ -149,13 +145,13 @@ const Profile = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Last Name
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Last Name"
               onChange={(e) => setlastname(e.target.value)}
               value={lastname}
@@ -164,13 +160,13 @@ const Profile = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
             Phone
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className="w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="Phone"
               onChange={(e) => setmobilet(e.target.value)}
               value={mobile}
@@ -179,13 +175,13 @@ const Profile = () => {
         </div>
 
         <div className=" flex items-start flex-col md:flex-row justify-between my-10">
-          <label className=" text-[18px] font-medium" htmlFor="">
-            City
+          <label className=" text-[18px] text-gray-700 font-medium" htmlFor="">
+            Address
           </label>
           <div className="w-full md:w-[70%]">
             <input
               type="text"
-              className=" w-full bg-transparent border border-[#808191] py-3 px-5 rounded-lg "
+              className=" w-full bg-inputBg border border-gray-200 py-4 text-[18px] outline-none focus:bg-white px-5 rounded-lg"
               placeholder="City"
               onChange={(e) => setcityt(e.target.value)}
               value={city}
@@ -193,13 +189,16 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className=" flex items-center justify-center gap-6 py-5 ">
-          <button
-            type="submit"
-            className=" py-3 px-10 rounded-lg bg-green-600 hover:bg-green-700 duration-300"
-          >
-            {isLoading ? "Loading..." : "Update"}
-          </button>
+        <div className=" flex items-center">
+          <div className="md:w-[30%] w-full"></div>
+          <div className=" md:w-[70%] w-full flex items-center justify-center gap-6 py-5 ">
+            <button
+              type="submit"
+              className=" py-3 px-10 rounded-lg bg-primary text-white w-full hover:bg-green-700 duration-300"
+            >
+              {isLoading ? "Loading..." : "Update"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

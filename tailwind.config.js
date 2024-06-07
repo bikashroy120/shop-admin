@@ -8,8 +8,9 @@ module.exports = {
       colors:{
         dark: "#1b1b1b",
         light: "#f5f5f5",
-        primary: "#181b3a",
-        primaryDark: "#58E6D9", 
+        primary: "#01d293",
+        primaryDark: "#58E6D9",
+        inputBg:"rgb(243 244 246/1)", 
         bodyColor: "#212428",
         lightText: "#c4cfde",
         boxBg: "linear-gradient(145deg, #1e2024, #23272b)",
