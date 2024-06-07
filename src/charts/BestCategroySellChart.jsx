@@ -19,7 +19,7 @@ const BestCategroySellChart = () => {
 
         const categoryCounts = orders.reduce((acc, order) => {
           order.products.forEach((item) => {
-            const category = item.category;
+            const category = item.p_category;
 
             if (acc[category]) {
               acc[category] += 1;

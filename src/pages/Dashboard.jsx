@@ -24,7 +24,9 @@ const Dashboard = () => {
   const { data, isLoading, refetch } = useQuery("order", () =>
     getDashbordData(queryFilter)
   );
-  const { data: today } = useQuery("order", getDashbordDataToday);
+  const { data: today } = useQuery("dssdsdsdsdsd", getDashbordDataToday);
+
+  console.log("++++++",today)
 
   const dashboard = [
     {

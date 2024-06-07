@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setupInterceptorsTo } from "./interceptor";
 
- const base_url = "http://localhost:5000/api";
+ const base_url = "https://test-api1-lac.vercel.app/api";
 //  const base_url = "https://api-75r3.onrender.com/api";
 
 const Axios = setupInterceptorsTo(
